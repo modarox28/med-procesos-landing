@@ -59,7 +59,7 @@ test('los enlaces externos abren en pestaña nueva con rel="noopener"', async ({
   const malos = await page.evaluate(() => [...document.querySelectorAll('a[href^="http"]')].filter((a) => a.target !== '_blank' || !/noopener/.test(a.rel)).map((a) => a.href));
   expect(malos).toEqual([]);
   await expect(page.locator('a[href^="https://calendly.com/asesorias-medprocesos/sesion-de-claridad"]')).toHaveCount(1);
-  await expect(page.locator('a[href="https://wa.me/message/KINW7CGQKIVFO1"]')).toHaveCount(1);
+  await expect(page.locator('a[href="https://api.whatsapp.com/message/KINW7CGQKIVFO1"]')).toHaveCount(1);
 });
 
 test('mito o realidad: la tarjeta se voltea al tocarla', async ({ page }) => {
