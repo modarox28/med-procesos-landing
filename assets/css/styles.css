@@ -309,7 +309,7 @@ ol, ul { list-style: none; }
 .insta-verde { background: var(--verde-osc); color: #fff; }
 .insta-pizarra { background: var(--pizarra); color: #fff; }
 /* Embed ya cargado: Instagram reemplaza el blockquote por un iframe */
-.insta-grid iframe.instagram-media, .insta-grid .instagram-media-rendered { min-width: 0 !important; width: 100% !important; max-width: none !important; margin: 0 !important; border-radius: 14px !important; border: 0 !important; box-shadow: var(--sombra) !important; background: #fff !important; }
+.insta-grid iframe, .insta-grid .instagram-media-rendered { opacity: 1 !important; visibility: visible !important; transform: none !important; aspect-ratio: auto !important; min-width: 0 !important; width: 100% !important; max-width: none !important; margin: 0 !important; border-radius: 14px !important; border: 0 !important; box-shadow: var(--sombra) !important; background: #fff !important; }
 .insta-nota { margin-top: 16px; font-size: 13px; color: var(--suave); }
 
 /* ── Preguntas ─────────────────────────────── */

@@ -140,6 +140,30 @@ test('Instagram: 4 publicaciones oficiales que se cargan al acercarse', async ({
   await expect(posts.first().locator('a')).toHaveAttribute('href', /instagram\.com\/reel\//);
 });
 
+test('Instagram: cuando el embed reemplaza las tarjetas por iframes, quedan visibles', async ({ page }) => {
+  // Simula embed.js: cambia cada blockquote por un iframe copiando sus estilos en línea, como hace Instagram
+  await page.unroute(/instagram\.com/);
+  await page.route(/instagram\.com\/embed\.js/, (r) => r.fulfill({ contentType: 'text/javascript', body: `
+    window.instgrm = { Embeds: { process() {
+      document.querySelectorAll('blockquote.instagram-media').forEach((b) => {
+        const f = document.createElement('iframe');
+        f.className = 'instagram-media instagram-media-rendered';
+        f.style.cssText = b.style.cssText + ';height:540px;';
+        f.src = 'about:blank';
+        b.replaceWith(f);
+      });
+    } } };` }));
+  await page.route(/instagram\.com\/(?!embed\.js)/, (r) => r.abort());
+  await page.locator('#instagram').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(2500);
+  const estados = await page.$$eval('#insta-grid iframe', (fs) => fs.map((f) => {
+    const r = f.getBoundingClientRect(), cs = getComputedStyle(f);
+    return { opacidad: +cs.opacity, alto: Math.round(r.height), ancho: Math.round(r.width), visible: cs.visibility };
+  }));
+  expect(estados.length).toBe(4);
+  for (const e of estados) { expect(e.opacidad).toBe(1); expect(e.alto).toBeGreaterThan(300); expect(e.ancho).toBeGreaterThan(200); expect(e.visible).toBe('visible'); }
+});
+
 test('el pie aclara que es un concepto no oficial', async ({ page }) => {
   await expect(page.locator('.pie-aviso')).toContainText('Sitio no oficial de Med Procesos');
 });

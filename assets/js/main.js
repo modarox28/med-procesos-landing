@@ -318,8 +318,10 @@
   });
 
   // L. Instagram: las tarjetas caen como fotos sobre la mesa
-  gsap.from(".insta-tarjeta", { y: 60, rotate: () => gsap.utils.random(-6, 6), opacity: 0, duration: 0.8, stagger: 0.08, ease: "power3.out",
-    scrollTrigger: { trigger: ".insta-grid", start: "top 85%", once: true }, clearProps: "transform" });
+  // Se anima el contenedor y no cada publicación: el embed de Instagram reemplaza los blockquote
+  // por iframes y copia sus estilos en línea, así que animar los hijos los dejaba invisibles.
+  gsap.fromTo("#insta-grid", { clipPath: "inset(0 0 100% 0)", y: 40 }, { clipPath: "inset(0 0 0% 0)", y: 0, duration: 1, ease: "power3.out",
+    scrollTrigger: { trigger: "#insta-grid", start: "top 88%", once: true }, clearProps: "clipPath,transform" });
 
   // M. Agenda: el sello se estampa
   gsap.from(".sello svg", { scale: 2.2, rotate: -40, opacity: 0, duration: 0.9, ease: "back.out(1.4)", scrollTrigger: { trigger: ".agenda", start: "top 65%", once: true } });
