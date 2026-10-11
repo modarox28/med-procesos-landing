@@ -27,7 +27,7 @@ Landing page informativa con reserva de asesorías para **Med Procesos**, que ac
 
 ## Publicaciones de Instagram
 
-En `assets/js/main.js` está la lista `POSTS_INSTAGRAM`. Pega ahí los enlaces de las publicaciones (en Instagram: ··· → Copiar enlace) y la sección las mostrará con el **embed oficial de Instagram**, que se carga solo al llegar a esa sección. Mientras la lista esté vacía, se muestran tarjetas propias que llevan al perfil oficial.
+La sección "Comunidad" muestra 4 publicaciones oficiales de @med.procesos con el **embed oficial de Instagram** (foto o video real, y enlace al post). El script de Instagram se carga solo al acercarse a la sección. Para cambiarlas, edita los `<blockquote class="instagram-media">` dentro de `#insta-grid` en `index.html`: cada uno lleva el enlace del post en `data-instgrm-permalink` y en su `<a>`. Si Instagram no carga (sin internet o con un bloqueador), se ve una tarjeta con el enlace a cada publicación.
 
 Las fotos del equipo y de los médicos son de Med Procesos y de las personas que aparecen: no se copian al sitio. Si Med Procesos lo autoriza, se pueden agregar en `assets/img/`.
 
@@ -37,7 +37,7 @@ Las fotos del equipo y de los médicos son de Med Procesos y de las personas que
 python3 -m http.server 8090      # http://localhost:8090
 npm install
 npx playwright install chromium  # solo la primera vez
-npm test                         # 15 pruebas × escritorio, celular y movimiento reducido
+npm test                         # 16 pruebas × escritorio, celular y movimiento reducido
 ```
 
 Las pruebas revisan errores de consola, desbordes, enlaces, el mapa, las interacciones (menú, mitos, pestañas, preguntas), que todo quede visible tras las animaciones, accesibilidad con axe (WCAG 2 AA) y la CSP.

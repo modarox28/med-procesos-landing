@@ -5,8 +5,12 @@ const path = require('path');
 
 test.beforeEach(async ({ page }) => {
   page._errores = [];
-  page.on('console', (m) => { if (m.type() === 'error') page._errores.push(m.text()); });
+  // Se ignora solo el aviso de red por el embed de Instagram, que las pruebas bloquean a propósito
+  page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) page._errores.push(m.text()); });
+  page.on('requestfailed', (r) => { if (!/instagram\.com/.test(r.url())) page._errores.push('Falló: ' + r.url()); });
   page.on('pageerror', (e) => page._errores.push(e.message));
+  // Instagram se bloquea en las pruebas para que sean deterministas (se ve la tarjeta de respaldo)
+  await page.route(/instagram\.com/, (r) => r.abort());
   await page.goto('/');
   await page.waitForLoadState('networkidle');
 });
@@ -122,6 +126,18 @@ test('seguridad: CSP presente y sin scripts de dominios no permitidos', async ({
   const externos = [...html.matchAll(/<script[^>]+src="(https?:[^"]+)"/g)].map((m) => m[1]);
   expect(externos).toEqual([]);
   expect(html).not.toMatch(/NUMERO_WHATSAPP/);
+});
+
+test('Instagram: 4 publicaciones oficiales que se cargan al acercarse', async ({ page }) => {
+  const posts = page.locator('#insta-grid blockquote.instagram-media');
+  await expect(posts).toHaveCount(4);
+  const enlaces = await posts.evaluateAll((b) => b.map((x) => x.dataset.instgrmPermalink));
+  expect(enlaces.every((u) => /^https:\/\/www\.instagram\.com\/(p|reel)\/[\w-]+\/$/.test(u))).toBe(true);
+  expect(await page.evaluate(() => !!document.querySelector('script[src*="instagram.com/embed.js"]'))).toBe(false);
+  await page.locator('#instagram').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(500);
+  expect(await page.evaluate(() => !!document.querySelector('script[src*="instagram.com/embed.js"]'))).toBe(true);
+  await expect(posts.first().locator('a')).toHaveAttribute('href', /instagram\.com\/reel\//);
 });
 
 test('el pie aclara que es un concepto no oficial', async ({ page }) => {

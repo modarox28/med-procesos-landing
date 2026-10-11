@@ -297,18 +297,19 @@ ol, ul { list-style: none; }
 /* ── Instagram ─────────────────────────────── */
 .insta-cabeza { display: flex; align-items: end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 36px; }
 .insta-cabeza .titulo { margin-bottom: 0; }
-.insta-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
-.insta-post { aspect-ratio: 4 / 5; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; justify-content: flex-end; text-decoration: none; position: relative; overflow: hidden; font-family: "Oswald", sans-serif; font-size: clamp(19px, 1.5vw, 22px); line-height: 1.15; transition: transform .4s var(--ease); }
-.insta-post:hover { transform: translateY(-4px) rotate(-.6deg); }
-.insta-post span { position: relative; }
+.insta-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; align-items: start; }
+/* Tarjeta de respaldo (antes de que cargue el embed, o si Instagram está bloqueado) */
+.insta-tarjeta { margin: 0; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; position: relative; }
+.insta-tarjeta > a { position: absolute; inset: 0; padding: 22px; display: flex; flex-direction: column; justify-content: flex-end; text-decoration: none; font-family: "Oswald", sans-serif; font-size: 21px; line-height: 1.15; transition: transform .4s var(--ease); }
+.insta-tarjeta > a:hover { transform: scale(1.02); }
 .insta-iso { position: absolute; left: 18px; top: 18px; width: 30px; height: 30px; }
 .insta-ig { position: absolute; right: 18px; top: 18px; width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; opacity: .85; }
 .insta-naranja { background: var(--naranja-ui); color: #fff; }
 .insta-lavanda { background: var(--lavanda); color: #fff; }
 .insta-verde { background: var(--verde-osc); color: #fff; }
 .insta-pizarra { background: var(--pizarra); color: #fff; }
-.insta-papel { background: #fff; color: var(--texto); box-shadow: var(--sombra); }
-.insta-grid .instagram-media { min-width: 0 !important; width: 100% !important; margin: 0 !important; border-radius: 14px !important; }
+/* Embed ya cargado: Instagram reemplaza el blockquote por un iframe */
+.insta-grid iframe.instagram-media, .insta-grid .instagram-media-rendered { min-width: 0 !important; width: 100% !important; max-width: none !important; margin: 0 !important; border-radius: 14px !important; border: 0 !important; box-shadow: var(--sombra) !important; background: #fff !important; }
 .insta-nota { margin-top: 16px; font-size: 13px; color: var(--suave); }
 
 /* ── Preguntas ─────────────────────────────── */
@@ -353,6 +354,9 @@ ol, ul { list-style: none; }
 .pie-aviso a { color: #fff; }
 
 /* ── Tablet ────────────────────────────────── */
+@media (max-width: 1180px) {
+  .insta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; }
+}
 @media (max-width: 1024px) {
   .baraja { grid-template-columns: repeat(2, 1fr); }
   .mitos-lista { grid-template-columns: repeat(2, 1fr); }
@@ -375,7 +379,7 @@ ol, ul { list-style: none; }
   .menu .boton { margin: 22px 0 0; }
   .hero-in { grid-template-columns: 1fr; }
   .hero-mapa { width: min(80vw, 300px); margin-top: 16px; }
-  .insta-grid { grid-template-columns: repeat(3, 1fr); }
+  .insta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mapa-nota { display: none; }
   .hero { padding-top: calc(var(--nav-h) + 8px); min-height: auto; padding-bottom: 72px; }
   .hero-bajar { display: none; }
@@ -415,8 +419,8 @@ ol, ul { list-style: none; }
   .baraja::-webkit-scrollbar, .mitos-lista::-webkit-scrollbar, .insta-grid::-webkit-scrollbar { display: none; }
   .carta { flex: 0 0 78%; scroll-snap-align: start; }
   .mito { flex: 0 0 84%; scroll-snap-align: start; min-height: 250px; }
-  .insta-post { flex: 0 0 64%; scroll-snap-align: start; }
-  .insta-grid .instagram-media { flex: 0 0 86%; scroll-snap-align: start; }
+  .insta-grid > * { flex: 0 0 84% !important; scroll-snap-align: start; }
+  .insta-grid { align-items: flex-start; }
   .crono li { grid-template-columns: 1fr; gap: 6px; padding: 14px 0 18px; }
   .crono li::before { top: 18px; }
   .crono time { font-size: 22px; }

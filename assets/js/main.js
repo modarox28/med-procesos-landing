@@ -3,12 +3,6 @@
 (() => {
   "use strict";
 
-  // Publicaciones reales de Instagram para incrustar (enlaces "Copiar enlace" de cada post).
-  // Mientras esté vacío se muestran tarjetas propias que llevan al perfil oficial.
-  const POSTS_INSTAGRAM = [
-    // "https://www.instagram.com/p/XXXXXXXXXXX/",
-  ];
-
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -127,30 +121,20 @@
     });
   });
 
-  // ── Instagram: publicaciones oficiales incrustadas (solo si hay enlaces) ──
+  // ── Instagram: embed oficial, cargado solo al acercarse a la sección ──
+  // Las publicaciones están en el HTML (#insta-grid) como <blockquote class="instagram-media">.
+  // Si Instagram no carga (sin internet o bloqueador), queda la tarjeta con el enlace a cada post.
   const gridInsta = $("#insta-grid");
-  if (POSTS_INSTAGRAM.length && gridInsta) {
-    const cargar = () => {
-      gridInsta.innerHTML = "";
-      POSTS_INSTAGRAM.forEach((url) => {
-        const b = document.createElement("blockquote");
-        b.className = "instagram-media";
-        b.setAttribute("data-instgrm-permalink", url);
-        b.setAttribute("data-instgrm-version", "14");
-        const a = document.createElement("a");
-        a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = "Ver esta publicación en Instagram";
-        b.appendChild(a);
-        gridInsta.appendChild(b);
-      });
+  if (gridInsta && $(".instagram-media", gridInsta)) {
+    new IntersectionObserver((ents, o) => {
+      if (!ents[0].isIntersecting) return;
+      o.disconnect();
       const s = document.createElement("script");
       s.src = "https://www.instagram.com/embed.js";
       s.async = true;
+      s.onload = () => { if (window.instgrm) window.instgrm.Embeds.process(); };
       document.body.appendChild(s);
-    };
-    new IntersectionObserver((ents, o) => { if (ents[0].isIntersecting) { o.disconnect(); cargar(); } }, { rootMargin: "400px" }).observe(gridInsta);
-  } else {
-    const nota = $("#insta-nota");
-    if (nota) nota.textContent = "Toca una publicación para verla en el Instagram oficial de Med Procesos.";
+    }, { rootMargin: "600px" }).observe(gridInsta);
   }
 
   // ── Contadores ──
@@ -334,7 +318,7 @@
   });
 
   // L. Instagram: las tarjetas caen como fotos sobre la mesa
-  gsap.from(".insta-post", { y: 60, rotate: () => gsap.utils.random(-6, 6), opacity: 0, duration: 0.8, stagger: 0.08, ease: "power3.out",
+  gsap.from(".insta-tarjeta", { y: 60, rotate: () => gsap.utils.random(-6, 6), opacity: 0, duration: 0.8, stagger: 0.08, ease: "power3.out",
     scrollTrigger: { trigger: ".insta-grid", start: "top 85%", once: true }, clearProps: "transform" });
 
   // M. Agenda: el sello se estampa
