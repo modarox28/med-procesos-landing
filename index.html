@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Med Procesos asesora a médicos colombianos para hacer su especialidad médica en Argentina. Convalidación, DNI, inscripción a residencias y más.">
+  <meta name="keywords" content="residencia médica argentina, convalidación título médico, DNI argentina médico colombiano, especialidad médica argentina">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Med Procesos – Tu residencia médica en Argentina">
+  <meta property="og:description" content="Claridad, estructura y acompañamiento real para tu especialidad médica en Argentina.">
+  <meta property="og:type" content="website">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self';">
+  <title>Med Procesos – Tu residencia médica en Argentina</title>
+  <link rel="stylesheet" href="assets/css/styles.css?v=1">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVEGACIÓN
+═══════════════════════════════════════════ -->
+<header class="nav-wrap" role="banner">
+  <nav class="nav container" aria-label="Navegación principal">
+    <a href="#inicio" class="nav-logo" aria-label="Med Procesos inicio">
+      <svg class="logo-svg" viewBox="0 0 200 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Círculo naranja con monograma mp -->
+        <circle class="logo-circle" cx="32" cy="32" r="30" fill="#E86A41"/>
+        <!-- Letra m: dos arcos con trazos rectos -->
+        <line class="logo-line" x1="11" y1="44" x2="18" y2="22" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line class="logo-line" x1="18" y1="22" x2="25" y2="44" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line class="logo-line" x1="25" y1="44" x2="32" y2="22" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line class="logo-line" x1="32" y1="22" x2="39" y2="44" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <!-- Letra p: trazo vertical + cuerpo cuadrado -->
+        <line class="logo-line" x1="45" y1="44" x2="45" y2="20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line class="logo-line" x1="45" y1="20" x2="54" y2="20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line class="logo-line" x1="54" y1="20" x2="54" y2="32" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <line class="logo-line" x1="45" y1="32" x2="54" y2="32" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <!-- Texto MED PROCESOS -->
+        <text class="logo-med" x="72" y="28" font-size="20" font-weight="700" fill="#2B2F36" font-family="Oswald, sans-serif" letter-spacing="1">MED</text>
+        <text class="logo-procesos" x="72" y="44" font-size="9.5" font-weight="700" fill="#4D606E" font-family="Oswald, sans-serif" letter-spacing="5.5">PROCESOS</text>
+      </svg>
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-menu" role="list">
+      <li><a href="#proceso">El proceso</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#resultados">Resultados</a></li>
+      <li><a href="#faq">Preguntas</a></li>
+      <li><a href="#agenda" class="nav-cta">Agenda tu asesoría</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     1. HERO
+═══════════════════════════════════════════ -->
+<section class="hero" id="inicio" aria-labelledby="hero-heading">
+  <div class="hero-bg-texture" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="6" stroke="#E86A41" stroke-width="2"/>
+          <path d="M5 8l2 2 4-4" stroke="#E86A41" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Asesoría personalizada para médicos colombianos
+      </div>
+      <h1 id="hero-heading">
+        Tu camino hacia la<br>
+        <span class="highlight-wrap">
+          <span class="highlight-text">residencia médica en Argentina</span>
+          <span class="highlight-bar" aria-hidden="true"></span>
+        </span>
+        empieza aquí.
+      </h1>
+      <p class="hero-sub">Claridad, estructura y acompañamiento real. Sin rodeos, sin sorpresas.</p>
+      <div class="hero-actions">
+        <a href="#agenda" class="btn btn-primary btn-magnetic">
+          <span>Agenda tu asesoría gratuita</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#proceso" class="btn btn-ghost">
+          Ver el proceso
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+      <div class="hero-trust" aria-label="Métricas de confianza">
+        <div class="trust-item">
+          <strong class="counter-120" aria-label="Más de 120 médicos">+120</strong>
+          <span>médicos asesorados en 2025</span>
+        </div>
+        <div class="trust-divider" aria-hidden="true"></div>
+        <div class="trust-item">
+          <strong>8 meses</strong>
+          <span>proceso típico más corto</span>
+        </div>
+        <div class="trust-divider" aria-hidden="true"></div>
+        <div class="trust-item">
+          <strong>2 rutas</strong>
+          <span>UBA y UNNE acreditadas</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-illustration" aria-hidden="true">
+      <!-- Ilustración SVG: mapa estilizado Colombia → Argentina -->
+      <svg class="map-svg" viewBox="0 0 320 480" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="320" height="480" rx="20" fill="#EBE8E5"/>
+
+        <!--
+          COLOMBIA
+          Rasgos clave: costa Caribe al N (plana), Guajira punta al NE,
+          costa Pacífica al W, Amazonia que se ensancha al SE.
+          País ocupa aprox 130×100 px del viewBox.
+        -->
+        <g class="country colombia" transform="translate(78, 24)">
+          <path d="M 0 56 L 0 34 L 10 18 L 22 6 L 46 0 L 64 2 L 76 -16 L 102 4 L 114 28 L 110 56 L 92 78 L 58 90 L 26 80 L 6 64 Z"
+                fill="#4AA9A3" opacity="0.28"/>
+          <path d="M 0 56 L 0 34 L 10 18 L 22 6 L 46 0 L 64 2 L 76 -16 L 102 4 L 114 28 L 110 56 L 92 78 L 58 90 L 26 80 L 6 64 Z"
+                stroke="#4AA9A3" stroke-width="2" fill="none" stroke-linejoin="miter"/>
+          <circle cx="36" cy="52" r="6" fill="#E86A41"/>
+          <text x="46" y="48" font-size="11" font-weight="700" fill="#2B2F36" font-family="Inter, sans-serif">Colombia</text>
+        </g>
+
+        <!-- Ruta aérea Bogotá → Buenos Aires -->
+        <path class="route-path"
+              d="M 114 78 C 168 138, 200 205, 190 272 C 180 335, 185 355, 188 378"
+              stroke="#E86A41" stroke-width="2" stroke-dasharray="6 5" fill="none"/>
+
+        <!-- Hitos del proceso -->
+        <circle class="route-stop" cx="196" cy="178" r="5" fill="#706AB0" opacity="0.85"/>
+        <circle class="route-stop" cx="192" cy="248" r="5" fill="#706AB0" opacity="0.85"/>
+        <circle class="route-stop" cx="188" cy="316" r="5" fill="#706AB0" opacity="0.85"/>
+
+        <!--
+          ARGENTINA
+          Rasgos clave: norte ancho (Jujuy-Formosa-Misiones),
+          "espalda" de BA en la costa atlántica E,
+          Patagonia que se estrecha hacia el S,
+          punta de Tierra del Fuego al sur.
+          País ocupa aprox 100×120 px del viewBox.
+        -->
+        <g class="country argentina" transform="translate(88, 352)">
+          <path d="M 18 0 L 64 2 L 82 20 L 76 40 L 84 62 L 70 86 L 56 106 L 40 122 L 26 126 L 14 118 L 6 96 L 4 68 L 8 42 L 12 18 Z"
+                fill="#706AB0" opacity="0.22"/>
+          <path d="M 18 0 L 64 2 L 82 20 L 76 40 L 84 62 L 70 86 L 56 106 L 40 122 L 26 126 L 14 118 L 6 96 L 4 68 L 8 42 L 12 18 Z"
+                stroke="#706AB0" stroke-width="2" fill="none" stroke-linejoin="miter"/>
+          <circle cx="72" cy="42" r="6" fill="#E86A41"/>
+          <text x="44" y="35" font-size="11" font-weight="700" fill="#2B2F36" font-family="Inter, sans-serif">Argentina</text>
+        </g>
+
+        <!-- Avión animado -->
+        <g class="plane" transform="translate(114, 78)">
+          <path d="M 0 0 L 14 -5 L 5 0 L 14 5 Z" fill="#E86A41"/>
+        </g>
+
+        <!-- Etiquetas hitos -->
+        <text x="118" y="178" font-size="9" fill="#4D606E" font-family="Inter, sans-serif">Documentos</text>
+        <text x="114" y="250" font-size="9" fill="#4D606E" font-family="Inter, sans-serif">Convalidación</text>
+        <text x="118" y="318" font-size="9" fill="#4D606E" font-family="Inter, sans-serif">Inscripción</text>
+      </svg>
+    </div>
+  </div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span>Sigue leyendo</span>
+    <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+      <path d="M8 4v12M4 12l4 4 4-4" stroke="#4D606E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     2. POR QUÉ NO HACERLO SOLO
+═══════════════════════════════════════════ -->
+<section class="solo section" id="por-que" aria-labelledby="solo-heading">
+  <div class="container">
+    <div class="section-label label-naranja" aria-hidden="true">Antes de empezar</div>
+    <h2 id="solo-heading" class="section-title">
+      A veces lo más costoso no es el trámite:
+      <span class="highlight-wrap">
+        <span class="highlight-text">es el error, el retraso</span>
+        <span class="highlight-bar highlight-lavanda" aria-hidden="true"></span>
+      </span>
+      o la oportunidad perdida.
+    </h2>
+    <div class="solo-grid">
+      <div class="solo-card">
+        <div class="solo-icon" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="16" stroke="#E86A41" stroke-width="2"/>
+            <path d="M12 18l4 4 8-8" stroke="#E86A41" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Documentos con errores</h3>
+        <p>Los consulados y universidades rechazan trámites por detalles que parecen menores pero cuestan semanas de retraso.</p>
+      </div>
+      <div class="solo-card">
+        <div class="solo-icon" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="16" stroke="#706AB0" stroke-width="2"/>
+            <path d="M18 10v10l6 3" stroke="#706AB0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Fechas críticas no controladas</h3>
+        <p>Las convocatorias de residencias tienen ventanas cortas. Perderte una puede significar esperar un año completo.</p>
+      </div>
+      <div class="solo-card">
+        <div class="solo-icon" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="16" stroke="#4AA9A3" stroke-width="2"/>
+            <path d="M12 14h12M12 18h8M12 22h10" stroke="#4AA9A3" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Información confusa y contradictoria</h3>
+        <p>Cada foro y cada grupo de WhatsApp da una versión diferente. Sin guía clara, el proceso se vuelve laberíntico.</p>
+      </div>
+      <div class="solo-card">
+        <div class="solo-icon" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="16" stroke="#A86F72" stroke-width="2"/>
+            <path d="M18 12v6l4 2M10 26l16-16" stroke="#A86F72" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Gastos imprevistos</h3>
+        <p>Sin saber exactamente qué documentos piden y en qué orden, muchos médicos pagan trámites que terminan siendo inútiles.</p>
+      </div>
+    </div>
+    <blockquote class="solo-quote">
+      <p>"Con Med Procesos tuve claridad desde el primer día. Sabía exactamente qué hacer y cuándo."</p>
+      <footer>— Médica colombiana, especialidad en UBA, 2025</footer>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     3. EL CAMINO EN 4 ETAPAS
+═══════════════════════════════════════════ -->
+<section class="proceso section section-dark" id="proceso" aria-labelledby="proceso-heading">
+  <div class="container">
+    <div class="section-label label-lavanda" aria-hidden="true">El proceso</div>
+    <h2 id="proceso-heading" class="section-title">Tu camino en <span class="text-naranja">4 etapas</span></h2>
+    <p class="section-sub">Ejemplo con inicio en octubre: de Colombia a la credencial médica en 8 meses.</p>
+
+    <div class="proceso-timeline" role="list">
+      <article class="etapa" data-etapa="1" role="listitem">
+        <div class="etapa-num" aria-hidden="true">01</div>
+        <div class="etapa-content">
+          <div class="etapa-fecha">Octubre</div>
+          <h3>Planeación y documentos</h3>
+          <p>Diagnóstico personalizado, revisión de títulos, apostillas, certificados de calificaciones y plan de acción.</p>
+          <ul class="etapa-items">
+            <li>Diagnóstico de situación actual</li>
+            <li>Lista exacta de documentos</li>
+            <li>Cronograma personalizado</li>
+          </ul>
+        </div>
+        <div class="etapa-connector" aria-hidden="true"></div>
+      </article>
+
+      <article class="etapa" data-etapa="2" role="listitem">
+        <div class="etapa-num" aria-hidden="true">02</div>
+        <div class="etapa-content">
+          <div class="etapa-fecha">Febrero</div>
+          <h3>DNI y convalidación</h3>
+          <p>Gestión del DNI (Visa Mercosur o Vía Radex con precaria) y inicio del proceso de convalidación en UBA o UNNE.</p>
+          <ul class="etapa-items">
+            <li>Radicación de solicitud DNI</li>
+            <li>Precaria vigente</li>
+            <li>Ingreso expediente convalidación</li>
+          </ul>
+        </div>
+        <div class="etapa-connector" aria-hidden="true"></div>
+      </article>
+
+      <article class="etapa" data-etapa="3" role="listitem">
+        <div class="etapa-num" aria-hidden="true">03</div>
+        <div class="etapa-content">
+          <div class="etapa-fecha">Agosto</div>
+          <h3>Examen e inscripción</h3>
+          <p>Preparación del examen con enfoque argentino, inscripción a residencias UBA, Provincia de Buenos Aires y readjudicaciones.</p>
+          <ul class="etapa-items">
+            <li>Material con enfoque argentino</li>
+            <li>Inscripción UBA / Provincia</li>
+            <li>Estrategia de readjudicaciones</li>
+          </ul>
+        </div>
+        <div class="etapa-connector" aria-hidden="true"></div>
+      </article>
+
+      <article class="etapa" data-etapa="4" role="listitem">
+        <div class="etapa-num" aria-hidden="true">04</div>
+        <div class="etapa-content">
+          <div class="etapa-fecha">Octubre</div>
+          <h3>Adjudicación y matrícula</h3>
+          <p>Acompañamiento en la adjudicación, trámite de matrícula provincial y credencial médica. ¡Ya eres residente!</p>
+          <ul class="etapa-items">
+            <li>Proceso de adjudicación</li>
+            <li>Matrícula provincial</li>
+            <li>Credencial médica</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+
+    <div class="proceso-note">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="8" cy="8" r="7" stroke="#4AA9A3" stroke-width="1.5"/>
+        <path d="M8 5v4M8 11v1" stroke="#4AA9A3" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Los tiempos son de referencia y varían según la universidad y la convocatoria. Con Med Procesos obtienes un cronograma personalizado para tu caso.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     4. SERVICIOS
+═══════════════════════════════════════════ -->
+<section class="servicios section" id="servicios" aria-labelledby="servicios-heading">
+  <div class="container">
+    <div class="section-label label-naranja" aria-hidden="true">Lo que hacemos</div>
+    <h2 id="servicios-heading" class="section-title">Servicios</h2>
+    <p class="section-sub">Desde el primer documento hasta la credencial. Tú eliges hasta dónde acompañarte.</p>
+
+    <div class="servicios-grid">
+      <article class="servicio-card" aria-label="Convalidación o reválida del título">
+        <div class="servicio-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="4" width="24" height="24" rx="4" stroke="#E86A41" stroke-width="2"/>
+            <path d="M10 16l4 4 8-8" stroke="#E86A41" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Convalidación o reválida del título</h3>
+        <p>Proceso en UBA o UNNE (universidades acreditadas). Te orientamos según tu situación particular.</p>
+        <span class="servicio-tag">Más solicitado</span>
+      </article>
+
+      <article class="servicio-card" aria-label="DNI argentino">
+        <div class="servicio-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="7" width="26" height="18" rx="3" stroke="#706AB0" stroke-width="2"/>
+            <circle cx="11" cy="15" r="4" stroke="#706AB0" stroke-width="2"/>
+            <path d="M19 13h6M19 17h4" stroke="#706AB0" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>DNI argentino</h3>
+        <p>Visa Mercosur o Vía Radex con precaria. Te explicamos cuál aplica para ti y cómo tramitarlo.</p>
+      </article>
+
+      <article class="servicio-card" aria-label="Inscripción a residencias">
+        <div class="servicio-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" stroke="#4AA9A3" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Inscripción a residencias</h3>
+        <p>UBA, Provincia de Buenos Aires, readjudicaciones y adjudicación. Seguimiento en cada paso.</p>
+      </article>
+
+      <article class="servicio-card" aria-label="Preparación del examen">
+        <div class="servicio-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M6 8h20M6 14h14M6 20h10" stroke="#E86A41" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="24" cy="22" r="5" stroke="#E86A41" stroke-width="2"/>
+            <path d="M22 22l2 2 3-3" stroke="#E86A41" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Preparación del examen</h3>
+        <p>Material y enfoque adaptado al sistema argentino. No basta con saber medicina: hay que conocer el formato.</p>
+      </article>
+
+      <article class="servicio-card" aria-label="Matrícula y credencial médica">
+        <div class="servicio-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="4" width="24" height="20" rx="3" stroke="#4AA9A3" stroke-width="2"/>
+            <circle cx="16" cy="12" r="4" stroke="#4AA9A3" stroke-width="2"/>
+            <path d="M8 24c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#4AA9A3" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Matrícula y credencial</h3>
+        <p>Acompañamiento hasta el final: matrícula provincial y credencial médica para ejercer legalmente.</p>
+      </article>
+
+      <article class="servicio-card" aria-label="Cronograma personalizado">
+        <div class="servicio-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="6" width="24" height="22" rx="3" stroke="#706AB0" stroke-width="2"/>
+            <path d="M10 4v4M22 4v4M4 14h24" stroke="#706AB0" stroke-width="2" stroke-linecap="round"/>
+            <path d="M10 20h2M15 20h2M20 20h2M10 24h2M15 24h2" stroke="#706AB0" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Cronograma personalizado</h3>
+        <p>Un plan de acción específico para tu situación, con fechas, pasos y alertas para no perder ninguna ventana.</p>
+      </article>
+
+      <article class="servicio-card" aria-label="Turismo académico">
+        <div class="servicio-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4C10 4 6 9 6 14c0 8 10 14 10 14s10-6 10-14c0-5-4-10-10-10z" stroke="#8A8773" stroke-width="2"/>
+            <circle cx="16" cy="14" r="3" stroke="#8A8773" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3>Turismo académico</h3>
+        <p>Orientación para planear tu llegada a Argentina: dónde vivir, qué conocer y cómo adaptarte.</p>
+      </article>
+
+      <article class="servicio-card servicio-featured" aria-label="Med Breakfast - paquete básico">
+        <div class="servicio-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="12" stroke="#E86A41" stroke-width="2"/>
+            <path d="M10 16l4 4 8-8" stroke="#E86A41" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Med Breakfast</h3>
+        <p>Nuestro paquete inicial. Todo lo que necesitas para empezar con claridad y seguridad desde el primer día.</p>
+        <span class="servicio-tag">Paquete inicial</span>
+      </article>
+
+      <article class="servicio-card servicio-featured servicio-premium" aria-label="Med Plus - servicio más completo">
+        <div class="servicio-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3l3.5 7 7.5 1-5.5 5 1.5 7.5L16 20l-7 3.5 1.5-7.5-5.5-5 7.5-1z" stroke="#E86A41" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Med Plus</h3>
+        <p>El servicio más completo de Med Procesos. Acompañamiento integral desde el primer documento hasta la residencia adjudicada.</p>
+        <span class="servicio-tag servicio-tag-premium">Más completo</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     5. MITO O REALIDAD
+═══════════════════════════════════════════ -->
+<section class="mitos section section-paper" id="mitos" aria-labelledby="mitos-heading">
+  <div class="container">
+    <div class="section-label label-lavanda" aria-hidden="true">Mito o realidad</div>
+    <h2 id="mitos-heading" class="section-title">Lo que se dice y lo que es real</h2>
+    <p class="section-sub">Haz clic en cada tarjeta para descubrir la realidad.</p>
+    <div class="mitos-grid" role="list">
+
+      <article class="mito-card" role="listitem" tabindex="0" aria-label="Mito: Si ya vivo en Argentina puedo empezar sin papeles">
+        <div class="mito-inner">
+          <div class="mito-front" aria-hidden="false">
+            <span class="mito-label" aria-hidden="true">Mito</span>
+            <p>"Si ya vivo en Argentina puedo empezar el proceso sin papeles."</p>
+            <span class="mito-flip-hint" aria-hidden="true">Toca para ver la realidad →</span>
+          </div>
+          <div class="mito-back" aria-hidden="true">
+            <span class="realidad-label" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <circle cx="9" cy="9" r="8" fill="#4AA9A3"/>
+                <path d="M5 9l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Realidad
+            </span>
+            <p>Necesitas DNI vigente, convalidación aprobada y matrícula activa antes de inscribirte a una residencia.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mito-card" role="listitem" tabindex="0" aria-label="Mito: Lo hago solo, es sencillo">
+        <div class="mito-inner">
+          <div class="mito-front" aria-hidden="false">
+            <span class="mito-label" aria-hidden="true">Mito</span>
+            <p>"Lo hago solo, el proceso es sencillo."</p>
+            <span class="mito-flip-hint" aria-hidden="true">Toca para ver la realidad →</span>
+          </div>
+          <div class="mito-back" aria-hidden="true">
+            <span class="realidad-label" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="#4AA9A3"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Realidad
+            </span>
+            <p>La mayoría de rechazos se deben a documentos incompletos, fechas no controladas o información confusa. Tener acompañamiento reduce ese riesgo significativamente.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mito-card" role="listitem" tabindex="0" aria-label="Mito: La visa Mercosur se tramita en cualquier consulado">
+        <div class="mito-inner">
+          <div class="mito-front" aria-hidden="false">
+            <span class="mito-label" aria-hidden="true">Mito</span>
+            <p>"La visa Mercosur se tramita en cualquier consulado argentino."</p>
+            <span class="mito-flip-hint" aria-hidden="true">Toca para ver la realidad →</span>
+          </div>
+          <div class="mito-back" aria-hidden="true">
+            <span class="realidad-label" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="#4AA9A3"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Realidad
+            </span>
+            <p>No todos los consulados argentinos en Colombia tramitan la Visa Mercosur. Debes verificar cuál atiende tu departamento antes de pedir la cita.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mito-card" role="listitem" tabindex="0" aria-label="Mito: Puedo estudiar con cursos de Colombia o España">
+        <div class="mito-inner">
+          <div class="mito-front" aria-hidden="false">
+            <span class="mito-label" aria-hidden="true">Mito</span>
+            <p>"Puedo prepararme con cursos de Colombia o España para el examen de residencias."</p>
+            <span class="mito-flip-hint" aria-hidden="true">Toca para ver la realidad →</span>
+          </div>
+          <div class="mito-back" aria-hidden="true">
+            <span class="realidad-label" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="#4AA9A3"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Realidad
+            </span>
+            <p>El examen se evalúa con terminología y enfoque clínico argentino. Material de otros países puede generar confusiones y bajar el puntaje.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mito-card" role="listitem" tabindex="0" aria-label="Mito: El proceso es rápido, solo papeles">
+        <div class="mito-inner">
+          <div class="mito-front" aria-hidden="false">
+            <span class="mito-label" aria-hidden="true">Mito</span>
+            <p>"El proceso es rápido. Solo son papeles."</p>
+            <span class="mito-flip-hint" aria-hidden="true">Toca para ver la realidad →</span>
+          </div>
+          <div class="mito-back" aria-hidden="true">
+            <span class="realidad-label" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="#4AA9A3"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Realidad
+            </span>
+            <p>Los retrasos más comunes vienen de la falta de organización, apostillas vencidas o documentos que no cumplen el formato exacto que pide cada institución.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mito-card" role="listitem" tabindex="0" aria-label="Mito: Puedo hacer la especialidad sin convalidar">
+        <div class="mito-inner">
+          <div class="mito-front" aria-hidden="false">
+            <span class="mito-label" aria-hidden="true">Mito</span>
+            <p>"Puedo hacer la especialidad sin convalidar mi título de medicina."</p>
+            <span class="mito-flip-hint" aria-hidden="true">Toca para ver la realidad →</span>
+          </div>
+          <div class="mito-back" aria-hidden="true">
+            <span class="realidad-label" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="#4AA9A3"/><path d="M5 9l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Realidad
+            </span>
+            <p>La convalidación es un requisito obligatorio para inscribirte a residencias. Sin ella, tu aplicación será rechazada sin importar tu puntaje en el examen.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     6. CRONOGRAMA DE REFERENCIA
+═══════════════════════════════════════════ -->
+<section class="cronograma section" id="cronograma" aria-labelledby="crono-heading">
+  <div class="container">
+    <div class="section-label label-naranja" aria-hidden="true">Fechas clave</div>
+    <h2 id="crono-heading" class="section-title">Cronograma de referencia</h2>
+    <p class="section-sub">Principales convocatorias en Argentina. Las fechas varían cada año.</p>
+
+    <div class="crono-tabs" role="tablist" aria-label="Cronograma por tipo de residencia">
+      <button class="crono-tab active" role="tab" aria-selected="true" aria-controls="crono-uba" id="tab-uba">UBA</button>
+      <button class="crono-tab" role="tab" aria-selected="false" aria-controls="crono-provincia" id="tab-provincia">Provincia de Bs. As.</button>
+      <button class="crono-tab" role="tab" aria-selected="false" aria-controls="crono-readjudicacion" id="tab-readj">Readjudicaciones</button>
+    </div>
+
+    <div class="crono-panel" id="crono-uba" role="tabpanel" aria-labelledby="tab-uba">
+      <div class="crono-list">
+        <div class="crono-item" data-index="0">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Agosto – Octubre</div>
+          <div class="crono-desc">Convocatoria e inscripción de aspirantes</div>
+        </div>
+        <div class="crono-item" data-index="1">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Noviembre</div>
+          <div class="crono-desc">Examen de ingreso (Ciclo Lectivo)</div>
+        </div>
+        <div class="crono-item" data-index="2">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Diciembre</div>
+          <div class="crono-desc">Publicación de resultados y adjudicación</div>
+        </div>
+        <div class="crono-item" data-index="3">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Febrero – Marzo</div>
+          <div class="crono-desc">Inicio de la residencia</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="crono-panel hidden" id="crono-provincia" role="tabpanel" aria-labelledby="tab-provincia">
+      <div class="crono-list">
+        <div class="crono-item" data-index="0">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Julio – Septiembre</div>
+          <div class="crono-desc">Convocatoria Provincia de Buenos Aires</div>
+        </div>
+        <div class="crono-item" data-index="1">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Octubre</div>
+          <div class="crono-desc">Examen de selección provincial</div>
+        </div>
+        <div class="crono-item" data-index="2">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Noviembre – Diciembre</div>
+          <div class="crono-desc">Adjudicación y trámite de matrícula</div>
+        </div>
+        <div class="crono-item" data-index="3">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Marzo</div>
+          <div class="crono-desc">Inicio de la residencia provincial</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="crono-panel hidden" id="crono-readjudicacion" role="tabpanel" aria-labelledby="tab-readjudicacion">
+      <div class="crono-list">
+        <div class="crono-item" data-index="0">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Enero – Febrero</div>
+          <div class="crono-desc">Publicación de vacantes de readjudicación</div>
+        </div>
+        <div class="crono-item" data-index="1">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Febrero</div>
+          <div class="crono-desc">Inscripción a readjudicaciones</div>
+        </div>
+        <div class="crono-item" data-index="2">
+          <div class="crono-dot" aria-hidden="true"></div>
+          <div class="crono-mes">Marzo</div>
+          <div class="crono-desc">Adjudicación de vacantes disponibles</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="crono-disclaimer" role="note">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="8" cy="8" r="7" stroke="#8A8773" stroke-width="1.5"/>
+        <path d="M8 5v4M8 11v1" stroke="#8A8773" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Fechas de referencia. Confirma siempre en la fuente oficial antes de tomar decisiones.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     7. RESULTADOS
+═══════════════════════════════════════════ -->
+<section class="resultados section section-dark" id="resultados" aria-labelledby="resultados-heading">
+  <div class="container">
+    <div class="section-label label-naranja" aria-hidden="true">Resultados</div>
+    <h2 id="resultados-heading" class="section-title">
+      Más de
+      <span class="counter-grande" data-target="120" aria-label="120">0</span>
+      médicos confiaron en Med Procesos en 2025.
+    </h2>
+
+    <!-- Mosaico de siluetas ilustradas -->
+    <div class="mosaico" aria-label="Mosaico de médicos asesorados" role="img">
+      <div class="mosaico-grid" aria-hidden="true">
+        <!-- 12 siluetas SVG minimalistas -->
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#4AA9A3" opacity="0.6"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#4AA9A3" opacity="0.4"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#706AB0" opacity="0.6"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#706AB0" opacity="0.4"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#E86A41" opacity="0.6"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#E86A41" opacity="0.4"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#4AA9A3" opacity="0.5"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#4AA9A3" opacity="0.3"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#A86F72" opacity="0.6"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#A86F72" opacity="0.4"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#706AB0" opacity="0.5"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#706AB0" opacity="0.3"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#E86A41" opacity="0.5"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#E86A41" opacity="0.3"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#4AA9A3" opacity="0.6"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#4AA9A3" opacity="0.4"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#8A8773" opacity="0.6"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#8A8773" opacity="0.4"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#706AB0" opacity="0.6"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#706AB0" opacity="0.4"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#E86A41" opacity="0.6"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#E86A41" opacity="0.4"/></svg>
+        <svg class="silueta" viewBox="0 0 40 56" fill="none"><circle cx="20" cy="14" r="10" fill="#4AA9A3" opacity="0.5"/><path d="M4 52c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#4AA9A3" opacity="0.3"/></svg>
+      </div>
+      <p class="mosaico-label">+120 médicos asesorados en 2025</p>
+    </div>
+
+    <div class="casos-grid">
+      <article class="caso-card" aria-label="Caso: convalidación en 2 meses">
+        <div class="caso-tiempo">2 meses</div>
+        <h3>Convalidación express</h3>
+        <p>Médica con documentos listos. Acompañamiento en todo el trámite de convalidación en UNNE. Sin contratiempos.</p>
+        <div class="caso-tag">Convalidación</div>
+      </article>
+      <article class="caso-card" aria-label="Caso: proceso completo en 8 meses">
+        <div class="caso-tiempo">8 meses</div>
+        <h3>De Colombia a residente</h3>
+        <p>Proceso completo: documentos, DNI, convalidación e inscripción a residencia en UBA. Adjudicación en primera convocatoria.</p>
+        <div class="caso-tag">Proceso completo</div>
+      </article>
+      <article class="caso-card" aria-label="Caso: proceso completo en 11 meses">
+        <div class="caso-tiempo">11 meses</div>
+        <h3>Con ajuste en el camino</h3>
+        <p>Documentos con observaciones iniciales. Reencauzamos el proceso y logramos la adjudicación en readjudicación.</p>
+        <div class="caso-tag">Con readjudicación</div>
+      </article>
+    </div>
+    <p class="resultados-disclaimer">Casos reales, sin nombres. Los tiempos varían según la situación de cada persona.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     8. DOCUMENTOS QUE FRENAN LA CONVALIDACIÓN
+═══════════════════════════════════════════ -->
+<section class="documentos section" id="documentos" aria-labelledby="docs-heading">
+  <div class="container">
+    <div class="section-label label-lavanda" aria-hidden="true">Qué frenar el proceso</div>
+    <h2 id="docs-heading" class="section-title">Documentos que suelen frenar una convalidación</h2>
+    <p class="section-sub">Saber esto de antemano te ahorra semanas de demora.</p>
+    <div class="docs-list" role="list">
+      <div class="doc-item" role="listitem">
+        <div class="doc-check" aria-hidden="true">
+          <svg class="check-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="14" stroke="#E86A41" stroke-width="2"/>
+            <path class="check-path" d="M9 16l5 5 9-9" stroke="#E86A41" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="20" stroke-dashoffset="20"/>
+          </svg>
+        </div>
+        <div class="doc-content">
+          <h3>Diplomas y títulos originales</h3>
+          <p>Deben estar apostillados y, en algunos casos, con traducción oficial al español rioplatense.</p>
+        </div>
+      </div>
+      <div class="doc-item" role="listitem">
+        <div class="doc-check" aria-hidden="true">
+          <svg class="check-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="14" stroke="#E86A41" stroke-width="2"/>
+            <path class="check-path" d="M9 16l5 5 9-9" stroke="#E86A41" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="20" stroke-dashoffset="20"/>
+          </svg>
+        </div>
+        <div class="doc-content">
+          <h3>Certificado de calificaciones</h3>
+          <p>Debe incluir todas las materias cursadas con notas. Muchas universidades tardan semanas en emitirlo.</p>
+        </div>
+      </div>
+      <div class="doc-item" role="listitem">
+        <div class="doc-check" aria-hidden="true">
+          <svg class="check-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="14" stroke="#E86A41" stroke-width="2"/>
+            <path class="check-path" d="M9 16l5 5 9-9" stroke="#E86A41" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="20" stroke-dashoffset="20"/>
+          </svg>
+        </div>
+        <div class="doc-content">
+          <h3>Documentos de identidad vigentes</h3>
+          <p>Cédula y pasaporte colombianos vigentes, más el DNI argentino o precaria. Todos con apostilla o legalización.</p>
+        </div>
+      </div>
+      <div class="doc-item" role="listitem">
+        <div class="doc-check" aria-hidden="true">
+          <svg class="check-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="16" r="14" stroke="#E86A41" stroke-width="2"/>
+            <path class="check-path" d="M9 16l5 5 9-9" stroke="#E86A41" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="20" stroke-dashoffset="20"/>
+          </svg>
+        </div>
+        <div class="doc-content">
+          <h3>Apostillas y legalizaciones</h3>
+          <p>El formato, la autoridad y el tiempo de vigencia varían. Un apostilla vencida puede rechazar todo el expediente.</p>
+        </div>
+      </div>
+    </div>
+    <div class="docs-cta">
+      <p>¿No sabes si tus documentos están en orden?</p>
+      <a href="#agenda" class="btn btn-primary">Revisamos tu caso juntos</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     9. PREGUNTAS FRECUENTES
+═══════════════════════════════════════════ -->
+<section class="faq section section-paper" id="faq" aria-labelledby="faq-heading">
+  <div class="container">
+    <div class="section-label label-naranja" aria-hidden="true">FAQ</div>
+    <h2 id="faq-heading" class="section-title">Preguntas frecuentes</h2>
+    <div class="faq-list" role="list">
+
+      <details class="faq-item" role="listitem">
+        <summary class="faq-question">¿Puedo viajar a Argentina sin convalidar primero?</summary>
+        <div class="faq-answer">
+          <p>Sí, puedes viajar antes de convalidar. De hecho, parte del proceso de convalidación requiere trámites presenciales en Argentina. Lo importante es tener claro el orden de los pasos para no perder tiempo ni dinero.</p>
+        </div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary class="faq-question">¿Puedo empezar el proceso solo con la precaria?</summary>
+        <div class="faq-answer">
+          <p>La precaria te permite iniciar algunos trámites, pero no es suficiente para inscribirte a una residencia. Necesitas el DNI definitivo antes de la inscripción. Planificar bien los tiempos evita que la precaria venza antes de recibirlo.</p>
+        </div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary class="faq-question">¿Cuál es la diferencia entre convalidación y reválida?</summary>
+        <div class="faq-answer">
+          <p>La convalidación reconoce materialmente tu título y te habilita para ejercer. La reválida implica rendir exámenes de las materias que no sean equivalentes. El camino depende de la universidad y tu historial académico.</p>
+        </div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary class="faq-question">¿Qué significa que una universidad esté acreditada?</summary>
+        <div class="faq-answer">
+          <p>Para que tu convalidación sea reconocida en Argentina, la universidad donde estudiaste debe estar acreditada por la CONEAU o reconocida en el Mercosur. UBA y UNNE aceptan títulos de universidades acreditadas en Colombia.</p>
+        </div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary class="faq-question">¿Cuándo conviene convalidar en UBA y cuándo en UNNE?</summary>
+        <div class="faq-answer">
+          <p>Depende de tu situación. UNNE suele tener tiempos más cortos, pero UBA tiene mayor reconocimiento para ciertas especialidades. En tu asesoría analizamos cuál es la mejor opción según tu perfil y objetivos.</p>
+        </div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary class="faq-question">¿Hay requisitos especiales para extranjeros en las residencias?</summary>
+        <div class="faq-answer">
+          <p>Sí. Necesitas DNI argentino vigente, convalidación aprobada y matrícula activa. En algunos casos, la residencia exige un tiempo mínimo de residencia en el país. Med Procesos te informa exactamente qué aplica para tu caso.</p>
+        </div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary class="faq-question">¿Qué debo tener listo antes de comprar el tiquete?</summary>
+        <div class="faq-answer">
+          <p>Antes de viajar: apostillas de diplomas y certificados, cédula y pasaporte vigentes, y claridad sobre la ruta del DNI. También es útil tener cuenta bancaria colombiana activa. Una asesoría previa te da un checklist personalizado.</p>
+        </div>
+      </details>
+
+      <details class="faq-item" role="listitem">
+        <summary class="faq-question">¿Cómo sé si una agencia es confiable?</summary>
+        <div class="faq-answer">
+          <p>Una agencia confiable te da información clara, no te promete resultados garantizados (nadie puede hacerlo), te explica los riesgos y tiene testimonios verificables. Desconfía de quienes cobran por adelantado sin contrato claro o prometen plazos imposibles.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     10. AGENDA TU ASESORÍA
+═══════════════════════════════════════════ -->
+<section class="agenda section section-dark" id="agenda" aria-labelledby="agenda-heading">
+  <div class="container agenda-inner">
+    <div class="agenda-content">
+      <div class="section-label label-naranja" aria-hidden="true">Hablemos</div>
+      <h2 id="agenda-heading" class="section-title">Tu residencia médica en Argentina puede ser tu próxima realidad.</h2>
+      <p class="agenda-sub">Una sesión de claridad de 30 minutos para entender tu situación y saber exactamente por dónde empezar. Sin compromiso.</p>
+      <ul class="agenda-items">
+        <li>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" fill="#E86A41" opacity="0.15"/>
+            <path d="M6 10l3 3 5-5" stroke="#E86A41" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Revisamos tu situación actual sin costo
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" fill="#E86A41" opacity="0.15"/>
+            <path d="M6 10l3 3 5-5" stroke="#E86A41" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Identificamos tus documentos faltantes
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" fill="#E86A41" opacity="0.15"/>
+            <path d="M6 10l3 3 5-5" stroke="#E86A41" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Definimos el camino más corto para tu caso
+        </li>
+      </ul>
+      <div class="agenda-btns">
+        <a href="https://calendly.com/asesorias-medprocesos/sesion-de-claridad"
+           class="btn btn-primary btn-magnetic btn-large"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Agenda tu asesoría gratuita en Calendly (abre en nueva pestaña)">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M7 2v3M13 2v3M3 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Agenda tu asesoría gratuita
+        </a>
+        <a href="https://wa.me/NUMERO_WHATSAPP"
+           class="btn btn-outline"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Atención con un agente por WhatsApp (abre en nueva pestaña)">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M17.5 12.5c-.3-1.7-1.8-3-3.5-3-1 0-1.8.4-2.5 1l-1-1c.6-.7 1-1.5 1-2.5C11.5 5.8 10.2 4.5 8.5 4.5c-1.7 0-3 1.3-3 3 0 1 .4 1.8 1 2.5l-1 1c-.7-.6-1.5-1-2.5-1-1.7 0-3 1.3-3 3s1.3 3 3 3c1 0 1.8-.4 2.5-1l3.5 3.5 3.5-3.5c.7.6 1.5 1 2.5 1 1.7 0 3-1.3 3-3 0-.2 0-.3-.5-1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Atención con un agente
+        </a>
+      </div>
+    </div>
+    <div class="agenda-img" aria-hidden="true">
+      <!-- Espacio para foto: médica feliz o equipo -->
+      <div class="img-placeholder">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+          <circle cx="40" cy="40" r="38" stroke="#4AA9A3" stroke-width="2" stroke-dasharray="4 3"/>
+          <circle cx="40" cy="30" r="14" fill="#4AA9A3" opacity="0.3"/>
+          <path d="M14 70c0-14.4 11.7-26 26-26s26 11.6 26 26" fill="#4AA9A3" opacity="0.2"/>
+          <text x="40" y="58" text-anchor="middle" font-size="10" fill="#4AA9A3" font-family="Inter, sans-serif">Foto del equipo</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     11. FOOTER
+═══════════════════════════════════════════ -->
+<footer class="footer" role="contentinfo">
+  <div class="container footer-inner">
+    <a href="#inicio" class="footer-logo" aria-label="Med Procesos inicio">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg" width="160" height="50" aria-hidden="true">
+        <circle cx="25" cy="25" r="22" fill="#E86A41"/>
+        <line x1="9" y1="35" x2="14.5" y2="17" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="14.5" y1="17" x2="20" y2="35" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="20" y1="35" x2="25.5" y2="17" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="25.5" y1="17" x2="31" y2="35" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="35" y1="35" x2="35" y2="16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="35" y1="16" x2="42" y2="16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="42" y1="16" x2="42" y2="25" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="35" y1="25" x2="42" y2="25" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="56" y="22" font-size="16" font-weight="700" fill="#2B2F36" font-family="Oswald, sans-serif" letter-spacing="1">MED</text>
+        <text x="56" y="34" font-size="7.5" font-weight="700" fill="#4D606E" font-family="Oswald, sans-serif" letter-spacing="4">PROCESOS</text>
+      </svg>
+    </a>
+    <div class="footer-nav">
+      <a href="#proceso">El proceso</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#agenda">Agenda</a>
+    </div>
+    <a href="https://www.instagram.com/med.procesos/"
+       class="footer-instagram"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Seguir a Med Procesos en Instagram (abre en nueva pestaña)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+      </svg>
+      @med.procesos
+    </a>
+  </div>
+  <div class="footer-disclaimer" role="note">
+    <p>⚠️ <strong>Concepto de diseño para portafolio.</strong> Sitio no oficial de Med Procesos. Todos los datos de contacto son reales y de uso público.</p>
+  </div>
+</footer>
+
+<!-- Vendor -->
+<script src="assets/vendor/lenis.min.js?v=1"></script>
+<script src="assets/vendor/gsap.min.js?v=1"></script>
+<script src="assets/vendor/ScrollTrigger.min.js?v=1"></script>
+<script src="assets/js/main.js?v=4"></script>
+</body>
+</html>
