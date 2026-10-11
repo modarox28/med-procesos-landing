@@ -1,0 +1,12 @@
+{
+  "name": "med-procesos-landing",
+  "private": true,
+  "description": "Landing de portafolio para Med Procesos (concepto no oficial)",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "axe-core": "^4.14.0"
+  }
+}

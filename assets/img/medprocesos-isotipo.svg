@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Med Procesos">
+  <defs><clipPath id="mp-c"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+  <circle cx="50" cy="50" r="50" fill="#E86A41"/>
+  <g fill="#FFFFFF" clip-path="url(#mp-c)">
+    <!-- "m": travesaño con esquina redondeada + primera pata (la recorta el círculo) -->
+    <path d="M13.4 47.2H86a4.55 4.55 0 0 1 0 9.1H18.3a2 2 0 0 0-2 2V100H7.2V53.4a6.2 6.2 0 0 1 6.2-6.2Z"/>
+    <!-- segunda pata de la "m" -->
+    <path d="M25.5 56.3h9.2v38h-9.2z"/>
+    <!-- asta central (tercera pata de la "m" y asta de la "p") -->
+    <path d="M43.8 10H53v84.3h-9.2z"/>
+    <!-- gancho de la "p" -->
+    <path d="M60 10h25a5.5 5.5 0 0 1 5.5 5.5v25h-9.2V18.8H60Z"/>
+  </g>
+</svg>

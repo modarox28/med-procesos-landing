@@ -1,85 +1,129 @@
+// Pruebas de la landing: errores, desbordes, navegación, interacciones, accesibilidad y seguridad.
 const { test, expect } = require('@playwright/test');
+const fs = require('fs');
+const path = require('path');
 
 test.beforeEach(async ({ page }) => {
-  const errors = [];
-  page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
-  page.on('pageerror', err => errors.push(err.message));
-  page._testErrors = errors;
+  page._errores = [];
+  page.on('console', (m) => { if (m.type() === 'error') page._errores.push(m.text()); });
+  page.on('pageerror', (e) => page._errores.push(e.message));
   await page.goto('/');
-  // Esperar a que Lenis y GSAP carguen
   await page.waitForLoadState('networkidle');
+});
+
+// Recorre la página para disparar todas las animaciones de scroll
+async function recorrer(page) {
+  const alto = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < alto; y += 500) { await page.mouse.wheel(0, 500); await page.waitForTimeout(120); }
   await page.waitForTimeout(800);
+}
+
+test('sin errores en consola después de recorrer toda la página', async ({ page }) => {
+  await recorrer(page);
+  expect(page._errores).toEqual([]);
 });
 
-test('Sin errores en consola', async ({ page }) => {
-  expect(page._testErrors).toEqual([]);
+test('sin desborde horizontal', async ({ page }) => {
+  await recorrer(page);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-test('Sin desborde horizontal', async ({ page }) => {
-  const overflow = await page.evaluate(() => document.body.scrollWidth > window.innerWidth);
-  expect(overflow).toBe(false);
+test('el logo es el isotipo de la marca y el título principal está presente', async ({ page }) => {
+  await expect(page.locator('.nav .marca-iso .trazo')).toHaveCount(4);
+  await expect(page.locator('#t-hero')).toContainText('residencia médica');
+  await expect(page.locator('#t-hero')).toContainText('Argentina');
 });
 
-test('Hero visible y h1 presente', async ({ page }) => {
-  const h1 = page.locator('#hero-heading');
-  await expect(h1).toBeVisible();
-  const text = await h1.textContent();
-  expect(text).toContain('residencia médica');
+test('el mapa usa siluetas reales de Colombia y Argentina', async ({ page }) => {
+  const largo = await page.evaluate(() => [document.querySelector('.pais-col').getAttribute('d').length, document.querySelector('.pais-arg').getAttribute('d').length]);
+  expect(largo[0]).toBeGreaterThan(1500);
+  expect(largo[1]).toBeGreaterThan(3000);
 });
 
-test('Navegación: todos los links del nav existen', async ({ page }) => {
-  await expect(page.locator('.nav-links a')).toHaveCount(5);
+test('el avión termina en Buenos Aires y se marcan las paradas', async ({ page }) => {
+  await page.locator('.hero-mapa').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(4500);
+  await expect(page.locator('.parada.activa')).toHaveCount(3);
 });
 
-test('Tabs de cronograma funcionan', async ({ page }) => {
-  await page.locator('#tab-provincia').click();
-  await expect(page.locator('#crono-provincia')).toBeVisible();
-  await expect(page.locator('#crono-uba')).toBeHidden();
-
-  await page.locator('#tab-uba').click();
-  await expect(page.locator('#crono-uba')).toBeVisible();
+test('todos los enlaces internos llevan a una sección que existe', async ({ page }) => {
+  const rotos = await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].map((a) => a.getAttribute('href')).filter((h) => h.length > 1 && !document.querySelector(h)));
+  expect(rotos).toEqual([]);
 });
 
-test('Flip cards de mitos se voltean al hacer clic', async ({ page }) => {
-  const card = page.locator('.mito-card').first();
-  await card.click();
-  await expect(card).toHaveClass(/flipped/);
+test('los enlaces externos abren en pestaña nueva con rel="noopener"', async ({ page }) => {
+  const malos = await page.evaluate(() => [...document.querySelectorAll('a[href^="http"]')].filter((a) => a.target !== '_blank' || !/noopener/.test(a.rel)).map((a) => a.href));
+  expect(malos).toEqual([]);
+  await expect(page.locator('a[href^="https://calendly.com/asesorias-medprocesos/sesion-de-claridad"]')).toHaveCount(1);
+  await expect(page.locator('a[href="https://wa.me/message/KINW7CGQKIVFO1"]')).toHaveCount(1);
 });
 
-test('FAQ accordion abre y cierra', async ({ page }) => {
-  const item = page.locator('.faq-item').first();
-  await item.locator('summary').click();
-  await expect(item).toHaveAttribute('open', '');
+test('mito o realidad: la tarjeta se voltea al tocarla', async ({ page }) => {
+  const m = page.locator('.mito').nth(2);
+  await m.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1500);
+  const antes = await m.getAttribute('aria-pressed');
+  await m.click();
+  expect(await m.getAttribute('aria-pressed')).not.toBe(antes);
 });
 
-test('Botón CTA principal tiene href válido', async ({ page }) => {
-  const btn = page.locator('a[href*="calendly.com"]').first();
-  await expect(btn).toBeVisible();
-  const href = await btn.getAttribute('href');
-  expect(href).toContain('calendly.com/asesorias-medprocesos');
+test('cronograma: las pestañas cambian el panel (también con el teclado)', async ({ page }) => {
+  await page.locator('#tab-esp').click();
+  await expect(page.locator('#panel-esp')).toBeVisible();
+  await expect(page.locator('#panel-readj')).toBeHidden();
+  await page.locator('#tab-esp').press('ArrowRight');
+  await expect(page.locator('#panel-readj')).toBeVisible();
 });
 
-test('Secciones clave existen en el DOM', async ({ page }) => {
-  for (const id of ['inicio', 'proceso', 'servicios', 'resultados', 'faq', 'agenda']) {
-    await expect(page.locator(`#${id}`)).toBeAttached();
-  }
-});
-
-test('Screenshot completo', async ({ page, browserName }, testInfo) => {
-  const vp = testInfo.project.name;
-  // Scroll para disparar animaciones ScrollTrigger
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+test('preguntas frecuentes: se abren y se cierran', async ({ page }) => {
+  const d = page.locator('.faq-item').first();
+  await d.locator('summary').scrollIntoViewIfNeeded();
+  await d.locator('summary').click();
+  await expect(d).toHaveAttribute('open', '');
   await page.waitForTimeout(600);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(400);
+  await d.locator('summary').click();
+  await page.waitForTimeout(600);
+  await expect(d).not.toHaveAttribute('open', '');
+});
 
-  await page.screenshot({
-    path: `tests/screenshots/${vp}-full.png`,
-    fullPage: true,
-  });
+test('menú de celular: abre, navega y se cierra', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'solo celular');
+  await page.locator('.nav-boton').click();
+  await expect(page.locator('#menu')).toHaveClass(/abierto/);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#menu')).not.toHaveClass(/abierto/);
+  await page.locator('.nav-boton').click();
+  await page.locator('#menu a[href="#preguntas"]').click();
+  await expect(page.locator('#menu')).not.toHaveClass(/abierto/);
+});
 
-  // Screenshot del hero
-  await page.locator('.hero').screenshot({
-    path: `tests/screenshots/${vp}-hero.png`,
-  });
+test('al terminar las animaciones el contenido queda visible y el contador llega a 120', async ({ page }) => {
+  await recorrer(page);
+  await page.waitForTimeout(2000);
+  await expect(page.locator('.res-num')).toHaveText('120');
+  const ocultos = await page.evaluate(() => [...document.querySelectorAll('.titulo, .carta, .mito, .caso, .lista-docs li, .etapa')]
+    .filter((e) => +getComputedStyle(e).opacity < 0.99).map((e) => e.className));
+  expect(ocultos).toEqual([]);
+});
+
+test('accesibilidad: axe sin fallas WCAG 2 A/AA', async ({ page }) => {
+  await recorrer(page);
+  await page.waitForTimeout(1500);
+  // Se inyecta por el protocolo del navegador: la CSP de la página (bien) bloquea scripts en línea
+  await page.evaluate(fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8'));
+  const fallas = await page.evaluate(async () => (await axe.run(document, { runOnly: ['wcag2a', 'wcag2aa'] })).violations
+    .map((v) => `${v.id}: ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(', ')}`));
+  expect(fallas).toEqual([]);
+});
+
+test('seguridad: CSP presente y sin scripts de dominios no permitidos', async ({ page }) => {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  expect(html).toMatch(/http-equiv="Content-Security-Policy"/);
+  const externos = [...html.matchAll(/<script[^>]+src="(https?:[^"]+)"/g)].map((m) => m[1]);
+  expect(externos).toEqual([]);
+  expect(html).not.toMatch(/NUMERO_WHATSAPP/);
+});
+
+test('el pie aclara que es un concepto no oficial', async ({ page }) => {
+  await expect(page.locator('.pie-aviso')).toContainText('Sitio no oficial de Med Procesos');
 });

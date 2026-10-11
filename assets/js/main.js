@@ -1,270 +1,356 @@
-/* ═══════════════════════════════════════════
-   MAIN.JS — Med Procesos Landing
-   Fase 3: GSAP + ScrollTrigger + Lenis
-═══════════════════════════════════════════ */
+/* Med Procesos · landing (concepto de portafolio)
+   Interacciones y animaciones: GSAP + ScrollTrigger + Lenis (copiados en assets/vendor). */
+(() => {
+  "use strict";
 
-gsap.registerPlugin(ScrollTrigger);
+  // Publicaciones reales de Instagram para incrustar (enlaces "Copiar enlace" de cada post).
+  // Mientras esté vacío se muestran tarjetas propias que llevan al perfil oficial.
+  const POSTS_INSTAGRAM = [
+    // "https://www.instagram.com/p/XXXXXXXXXXX/",
+  ];
 
-/* ─── Lenis smooth scroll integrado con GSAP ─── */
-const lenis = new Lenis({ lerp: 0.1, duration: 1.2 });
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add(time => lenis.raf(time * 1000));
-gsap.ticker.lagSmoothing(0);
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const punteroFino = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-/* ─── Nav: scroll class ─── */
-const navWrap    = document.querySelector('.nav-wrap');
-const navToggle  = document.querySelector('.nav-toggle');
-const navLinksList = document.querySelector('.nav-links');
-
-window.addEventListener('scroll', () => {
-  navWrap.classList.toggle('scrolled', window.scrollY > 24);
-}, { passive: true });
-
-/* ─── Nav toggle móvil ─── */
-navToggle.addEventListener('click', () => {
-  const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
-  navToggle.setAttribute('aria-expanded', String(!isOpen));
-  navLinksList.classList.toggle('open', !isOpen);
-});
-navLinksList.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    navToggle.setAttribute('aria-expanded', 'false');
-    navLinksList.classList.remove('open');
-  });
-});
-
-/* ─── Tabs cronograma ─── */
-document.querySelectorAll('.crono-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    const panelId = tab.getAttribute('aria-controls');
-    const panel   = document.getElementById(panelId);
-    document.querySelectorAll('.crono-tab').forEach(t => {
-      t.classList.remove('active');
-      t.setAttribute('aria-selected', 'false');
-    });
-    document.querySelectorAll('.crono-panel').forEach(p => p.classList.add('hidden'));
-    tab.classList.add('active');
-    tab.setAttribute('aria-selected', 'true');
-    panel.classList.remove('hidden');
-  });
-});
-
-/* ─── Mito/Realidad flip cards ─── */
-document.querySelectorAll('.mito-card').forEach(card => {
-  const front = card.querySelector('.mito-front');
-  const back  = card.querySelector('.mito-back');
-  function flip(state) {
-    card.classList.toggle('flipped', state);
-    front.setAttribute('aria-hidden', String(state));
-    back.setAttribute('aria-hidden',  String(!state));
+  // Al recargar, siempre al inicio (salvo que se llegue con un #enlace)
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  const nav0 = performance.getEntriesByType("navigation")[0];
+  if (!location.hash || (nav0 && nav0.type === "reload")) {
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    window.scrollTo(0, 0);
   }
-  card.addEventListener('click',  () => flip(!card.classList.contains('flipped')));
-  card.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(!card.classList.contains('flipped')); }
+
+  const hayGSAP = typeof window.gsap !== "undefined" && typeof window.ScrollTrigger !== "undefined";
+  if (hayGSAP) gsap.registerPlugin(ScrollTrigger);
+
+  // ── Scroll suave solo con mouse/trackpad (en celular, scroll nativo) ──
+  let lenis = null;
+  if (hayGSAP && !reducido && punteroFino && typeof window.Lenis !== "undefined") {
+    lenis = new Lenis({ lerp: 0.11 });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+  const irA = (destino) => {
+    if (lenis) lenis.scrollTo(destino, { offset: -8, duration: 1.2 });
+    else destino.scrollIntoView({ behavior: reducido ? "auto" : "smooth" });
+  };
+  $$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
+    const id = a.getAttribute("href");
+    const destino = id.length > 1 && $(id);
+    if (!destino) return;
+    e.preventDefault();
+    cerrarMenu();
+    irA(destino);
+    if (id !== "#inicio") destino.setAttribute("tabindex", "-1"), destino.focus({ preventScroll: true });
+  }));
+
+  // ── Navegación ──
+  const nav = $("#nav");
+  const boton = $(".nav-boton");
+  const menu = $("#menu");
+  let ultimoY = 0;
+  const alDesplazar = () => {
+    const y = window.scrollY;
+    nav.classList.toggle("con-fondo", y > 20);
+    const abierto = boton.getAttribute("aria-expanded") === "true";
+    nav.classList.toggle("oculta", !abierto && y > 400 && y > ultimoY + 4);
+    if (y < ultimoY - 4 || y < 400) nav.classList.remove("oculta");
+    ultimoY = y;
+  };
+  addEventListener("scroll", alDesplazar, { passive: true });
+  alDesplazar();
+
+  function abrirMenu() {
+    boton.setAttribute("aria-expanded", "true");
+    boton.setAttribute("aria-label", "Cerrar menú");
+    menu.classList.add("abierto");
+    document.documentElement.style.overflow = "hidden";
+    if (lenis) lenis.stop();
+    if (hayGSAP && !reducido) gsap.fromTo($$("a", menu), { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5, stagger: 0.05, delay: 0.15, ease: "power3.out" });
+    setTimeout(() => $("a", menu).focus(), 200);
+  }
+  function cerrarMenu() {
+    if (boton.getAttribute("aria-expanded") !== "true") return;
+    boton.setAttribute("aria-expanded", "false");
+    boton.setAttribute("aria-label", "Abrir menú");
+    menu.classList.remove("abierto");
+    document.documentElement.style.overflow = "";
+    if (lenis) lenis.start();
+  }
+  boton.addEventListener("click", () => (boton.getAttribute("aria-expanded") === "true" ? cerrarMenu() : abrirMenu()));
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && boton.getAttribute("aria-expanded") === "true") { cerrarMenu(); boton.focus(); } });
+  matchMedia("(min-width: 901px)").addEventListener("change", (e) => { if (e.matches) cerrarMenu(); });
+
+  // ── Mito o realidad: voltear ──
+  $$(".mito").forEach((m) => m.addEventListener("click", () => {
+    m.setAttribute("aria-pressed", m.getAttribute("aria-pressed") === "true" ? "false" : "true");
+  }));
+
+  // ── Pestañas del cronograma (con flechas del teclado) ──
+  const pestanas = $$(".pestana");
+  const elegir = (p, foco) => {
+    pestanas.forEach((x) => {
+      const sel = x === p;
+      x.setAttribute("aria-selected", String(sel));
+      x.tabIndex = sel ? 0 : -1;
+      $("#" + x.getAttribute("aria-controls")).hidden = !sel;
+    });
+    if (foco) p.focus();
+    if (hayGSAP) ScrollTrigger.refresh();
+    animarCrono();
+  };
+  pestanas.forEach((p, i) => {
+    p.addEventListener("click", () => elegir(p));
+    p.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        elegir(pestanas[(i + (e.key === "ArrowRight" ? 1 : pestanas.length - 1)) % pestanas.length], true);
+      }
+    });
   });
-});
 
-/* ═══════════════════════════════════════════
-   GSAP — sólo si el usuario no prefiere
-   movimiento reducido
-═══════════════════════════════════════════ */
-const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (!motionOK) {
-  document.querySelectorAll('.highlight-bar').forEach(b => b.classList.add('visible'));
-} else {
-
-/* ─── A. Logo draw al cargar ─── */
-{
-  const logoLines = document.querySelectorAll('.nav-logo .logo-line');
-  logoLines.forEach(line => {
-    const len = line.getTotalLength ? line.getTotalLength() : 28;
-    gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+  // ── Preguntas: abrir/cerrar con altura animada ──
+  $$(".faq-item").forEach((d) => {
+    const sum = $("summary", d), r = $(".faq-r", d);
+    sum.addEventListener("click", (e) => {
+      if (!hayGSAP || reducido) return;
+      e.preventDefault();
+      if (d.open) {
+        gsap.to(r, { height: 0, duration: 0.35, ease: "power2.inOut", onComplete: () => { d.open = false; r.style.height = ""; } });
+      } else {
+        d.open = true;
+        gsap.fromTo(r, { height: 0 }, { height: r.scrollHeight, duration: 0.45, ease: "power3.out", onComplete: () => (r.style.height = "") });
+      }
+    });
   });
-  gsap.to('.nav-logo .logo-line', {
-    strokeDashoffset: 0,
-    duration: 0.7,
-    stagger: 0.07,
-    ease: 'power2.out',
-    delay: 0.2
+
+  // ── Instagram: publicaciones oficiales incrustadas (solo si hay enlaces) ──
+  const gridInsta = $("#insta-grid");
+  if (POSTS_INSTAGRAM.length && gridInsta) {
+    const cargar = () => {
+      gridInsta.innerHTML = "";
+      POSTS_INSTAGRAM.forEach((url) => {
+        const b = document.createElement("blockquote");
+        b.className = "instagram-media";
+        b.setAttribute("data-instgrm-permalink", url);
+        b.setAttribute("data-instgrm-version", "14");
+        const a = document.createElement("a");
+        a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = "Ver esta publicación en Instagram";
+        b.appendChild(a);
+        gridInsta.appendChild(b);
+      });
+      const s = document.createElement("script");
+      s.src = "https://www.instagram.com/embed.js";
+      s.async = true;
+      document.body.appendChild(s);
+    };
+    new IntersectionObserver((ents, o) => { if (ents[0].isIntersecting) { o.disconnect(); cargar(); } }, { rootMargin: "400px" }).observe(gridInsta);
+  } else {
+    const nota = $("#insta-nota");
+    if (nota) nota.textContent = "Toca una publicación para verla en el Instagram oficial de Med Procesos.";
+  }
+
+  // ── Contadores ──
+  function contar(el) {
+    const hasta = +el.dataset.hasta, pre = el.dataset.prefijo || "";
+    if (!hayGSAP || reducido) { el.textContent = pre + hasta; return; }
+    const o = { v: 0 };
+    gsap.to(o, { v: hasta, duration: 1.8, ease: "power3.out", onUpdate: () => (el.textContent = pre + Math.round(o.v)) });
+  }
+
+  // ── Línea de tiempo del cronograma ──
+  let animarCrono = () => {};
+
+  // Sin GSAP o con movimiento reducido: todo visible y en su estado final
+  if (!hayGSAP || reducido) {
+    $$(".resalta").forEach((m) => m.classList.add("pintado"));
+    $$(".etapa, .crono li, .parada").forEach((e) => e.classList.add("activa"));
+    $$(".lista-docs li").forEach((e) => e.classList.add("lista"));
+    $$(".crono, .etapas").forEach((e) => e.style.setProperty("--avance", 1));
+    $$(".cuenta").forEach((c) => (c.textContent = (c.dataset.prefijo || "") + c.dataset.hasta));
+    const ruta = $("#ruta"), avion = $("#avion");
+    if (ruta && avion) {
+      const L = ruta.getTotalLength(), p = ruta.getPointAtLength(L), q = ruta.getPointAtLength(L - 2);
+      avion.setAttribute("transform", `translate(${p.x} ${p.y}) rotate(${Math.atan2(p.y - q.y, p.x - q.x) * 57.3 + 90})`);
+    }
+    return;
+  }
+
+  // ════════════════ ANIMACIONES ════════════════
+
+  // A. El logo se traza al cargar
+  $$(".nav .trazo").forEach((t, i) => {
+    const L = t.getTotalLength();
+    gsap.fromTo(t, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, duration: 0.7, delay: 0.15 + i * 0.16, ease: "power2.inOut" });
   });
-}
+  gsap.from(".nav .marca-txt small", { letterSpacing: "0em", opacity: 0, duration: 1.2, delay: 0.6, ease: "power3.out" });
+  gsap.from(".nav .marca-txt b", { yPercent: 60, opacity: 0, duration: 0.6, delay: 0.4, ease: "power3.out" });
 
-/* ─── B. Hero fade-in escalonado ─── */
-const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-heroTl
-  .from('.hero-badge',       { opacity: 0, y: 18, duration: 0.6 }, 0.3)
-  .from('.hero-content h1',  { opacity: 0, y: 30, duration: 0.75 }, 0.45)
-  .from('.hero-sub',         { opacity: 0, y: 20, duration: 0.65 }, 0.6)
-  .from('.hero-actions',     { opacity: 0, y: 18, duration: 0.6  }, 0.75)
-  .from('.hero-trust',       { opacity: 0, y: 14, duration: 0.55 }, 0.88)
-  .from('.hero-illustration',{ opacity: 0, scale: 0.92, duration: 0.9, ease: 'power2.out' }, 0.4);
+  // B. Hero: líneas que suben tras una máscara y frases que se pintan
+  const hero = gsap.timeline({ defaults: { ease: "power4.out" } });
+  hero.from(".hero-titulo .linea > span", { yPercent: 110, duration: 1, stagger: 0.09 }, 0.2)
+      .from(".hero .etiqueta", { y: 16, opacity: 0, duration: 0.6 }, 0.1)
+      .add(() => $$(".hero .resalta").forEach((m, i) => setTimeout(() => m.classList.add("pintado"), i * 260)), 0.85)
+      .from(".hero-sub, .hero-botones, .hero-datos", { y: 22, opacity: 0, duration: 0.8, stagger: 0.1 }, 0.7)
+      .add(() => $$(".hero .cuenta").forEach(contar), 1.1);
 
-/* ─── C. Ruta del mapa + avión ─── */
-{
-  const routePath = document.querySelector('.route-path');
-  const plane     = document.querySelector('.plane');
-  if (routePath && plane) {
-    const pathLen = routePath.getTotalLength();
-    gsap.set(routePath, { strokeDasharray: pathLen, strokeDashoffset: pathLen });
-    const prog = { p: 0 };
+  // C. Mapa: países que aparecen y avión que recorre la ruta parando en cada etapa
+  const ruta = $("#ruta"), avion = $("#avion");
+  if (ruta && avion) {
+    const L = ruta.getTotalLength();
+    const paradas = $$(".parada").map((g) => {
+      const p = +g.dataset.p, pt = ruta.getPointAtLength(L * p);
+      g.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
+      return { g, p };
+    });
+    const colocar = (p) => {
+      const a = ruta.getPointAtLength(L * p), b = ruta.getPointAtLength(Math.min(L, L * p + 1.5));
+      const ang = Math.atan2(b.y - a.y, b.x - a.x) * 57.2958 + 90;
+      avion.setAttribute("transform", `translate(${a.x} ${a.y}) rotate(${ang}) scale(1.05)`);
+      ruta.style.strokeDashoffset = L * (1 - p);
+      paradas.forEach((x) => x.g.classList.toggle("activa", p >= x.p - 0.005));
+    };
+    ruta.style.strokeDasharray = L;
+    colocar(0);
+    const o = { p: 0 };
+    // En celular el mapa queda debajo del texto: su animación empieza cuando se ve
+    const mapaTl = gsap.timeline({ scrollTrigger: { trigger: ".hero-mapa", start: "top 88%", once: true } });
+    mapaTl.from(".mapa-vecinos path", { opacity: 0, duration: 0.8, stagger: { each: 0.03, from: "random" } }, 0)
+        .from(".pais", { scale: 0.6, opacity: 0, transformOrigin: "50% 50%", duration: 1, ease: "back.out(1.6)", stagger: 0.25 }, 0.25)
+        .from(".ciudad", { scale: 0, transformOrigin: "50% 50%", duration: 0.5, ease: "back.out(2)", stagger: 0.4 }, 0.7)
+        .from(".parada text", { opacity: 0, x: -6, duration: 0.4, stagger: 0.5 }, 1.4)
+        .to(o, { p: 1, duration: 2.6, ease: "power2.inOut", onUpdate: () => colocar(o.p) }, 0.9);
+    gsap.to(".hero-mapa", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  }
 
-    gsap.to(prog, {
-      p: 1,
-      ease: 'none',
+  // D. Frases resaltadas que se pintan al llegar
+  $$(".resalta").filter((m) => !m.closest(".hero")).forEach((m) => {
+    ScrollTrigger.create({ trigger: m, start: "top 82%", once: true, onEnter: () => m.classList.add("pintado") });
+  });
+
+  // Títulos y entradas: suben tras una máscara de recorte (no un simple fundido)
+  $$(".seccion .titulo, .camino .titulo, .agenda .titulo, .seccion .entrada, .camino .entrada, .agenda .entrada").forEach((el) => {
+    gsap.fromTo(el, { clipPath: "inset(0 0 100% 0)", y: 24 }, { clipPath: "inset(0 0 0% 0)", y: 0, duration: 0.9, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 88%", once: true }, clearProps: "clipPath" });
+  });
+  $$(".etiqueta").filter((e) => !e.closest(".hero")).forEach((el) => {
+    gsap.from(el, { scaleX: 0, transformOrigin: "left center", duration: 0.6, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+  });
+
+  // E. Riesgos: se descubren como si se pasara la página
+  gsap.from(".riesgos li", { clipPath: "inset(0 100% 0 0)", duration: 1, ease: "power3.inOut", stagger: 0.18,
+    scrollTrigger: { trigger: ".riesgos", start: "top 80%", once: true }, clearProps: "clipPath" });
+
+  const mm = gsap.matchMedia();
+
+  // F. El camino
+  mm.add("(min-width: 901px)", () => {
+    const etapas = $(".etapas"), lista = $$(".etapa");
+    const distancia = () => Math.max(0, etapas.scrollWidth - innerWidth + 40);
+    const barra = $(".camino-barra"), av = $(".camino-avion"), prog = $(".camino-progreso");
+    const t = gsap.timeline({
+      defaults: { ease: "none" },
       scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom center',
-        scrub: 2
+        trigger: ".camino", start: "top top", end: () => "+=" + (distancia() + innerHeight * 0.6),
+        pin: ".camino-fijo", scrub: 0.8, invalidateOnRefresh: true, anticipatePin: 1,
+        onUpdate: (st) => lista.forEach((e, i) => e.classList.toggle("activa", st.progress >= i / lista.length - 0.02)),
       },
-      onUpdate() {
-        const t      = pathLen * prog.p;
-        const pt     = routePath.getPointAtLength(t);
-        const ptNext = routePath.getPointAtLength(Math.min(pathLen, t + 6));
-        const angle  = Math.atan2(ptNext.y - pt.y, ptNext.x - pt.x) * (180 / Math.PI);
-        gsap.set(routePath, { strokeDashoffset: pathLen * (1 - prog.p) });
-        gsap.set(plane, { x: pt.x - 114, y: pt.y - 78, rotation: angle + 90 });
-      }
+    });
+    t.to(etapas, { x: () => -distancia() }, 0)
+     .to(barra, { scaleX: 1 }, 0)
+     .to(av, { x: () => prog.offsetWidth - 20 }, 0);
+    gsap.from(lista, { y: 60, rotate: 2, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out", scrollTrigger: { trigger: ".camino", start: "top 70%", once: true } });
+  });
+  mm.add("(max-width: 900px)", () => {
+    const etapas = $(".etapas");
+    ScrollTrigger.create({ trigger: etapas, start: "top 70%", end: "bottom 60%", scrub: true,
+      onUpdate: (st) => etapas.style.setProperty("--avance", st.progress.toFixed(3)) });
+    $$(".etapa").forEach((e) => ScrollTrigger.create({ trigger: e, start: "top 65%", onEnter: () => e.classList.add("activa"), onLeaveBack: () => e.classList.remove("activa") }));
+    gsap.utils.toArray(".etapa").forEach((e) => gsap.from(e, { x: 40, opacity: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: e, start: "top 88%", once: true } }));
+  });
+
+  // G. Servicios: una baraja que se abre en abanico hasta formar la cuadrícula
+  mm.add("(min-width: 1025px)", () => {
+    const baraja = $(".baraja"), cartas = $$(".carta", baraja);
+    const caja = baraja.getBoundingClientRect();
+    gsap.from(cartas, {
+      x: (i, el) => { const r = el.getBoundingClientRect(); return caja.left + caja.width / 2 - (r.left + r.width / 2); },
+      y: (i, el) => { const r = el.getBoundingClientRect(); return caja.top + caja.height / 2 - (r.top + r.height / 2) + 40; },
+      rotate: (i) => (i - cartas.length / 2) * 4,
+      scale: 0.9,
+      ease: "power2.out",
+      stagger: 0.03,
+      scrollTrigger: { trigger: baraja, start: "top 85%", end: "top 30%", scrub: 0.9 },
+    });
+  });
+  mm.add("(max-width: 1024px)", () => {
+    gsap.from(".carta", { y: 40, opacity: 0, duration: 0.6, stagger: 0.07, ease: "power3.out", scrollTrigger: { trigger: ".baraja", start: "top 85%", once: true } });
+  });
+
+  // H. Mito o realidad: las tarjetas se reparten y la primera se voltea como demostración
+  gsap.from(".mitos-titulo", { yPercent: 40, opacity: 0, duration: 1, ease: "power4.out", scrollTrigger: { trigger: ".mitos", start: "top 75%", once: true } });
+  gsap.from(".mito", { y: 80, rotateX: -35, opacity: 0, transformPerspective: 900, transformOrigin: "50% 100%", duration: 0.9, stagger: 0.1, ease: "power3.out",
+    scrollTrigger: { trigger: ".mitos-lista", start: "top 80%", once: true },
+    onComplete: () => {
+      const m = $(".mito");
+      if (!m || m.dataset.tocado) return;
+      m.setAttribute("aria-pressed", "true");
+      setTimeout(() => { if (!m.dataset.tocado) m.setAttribute("aria-pressed", "false"); }, 1800);
+    } });
+  $$(".mito").forEach((m) => m.addEventListener("click", () => (m.dataset.tocado = "1")));
+
+  // I. Cronograma: la línea avanza y cada fecha se enciende
+  let triggersCrono = [];
+  animarCrono = () => {
+    triggersCrono.forEach((t) => t.kill());
+    triggersCrono = [];
+    const panel = $(".crono-panel:not([hidden]) .crono");
+    if (!panel) return;
+    triggersCrono.push(ScrollTrigger.create({ trigger: panel, start: "top 65%", end: "bottom 55%", scrub: true,
+      onUpdate: (st) => panel.style.setProperty("--avance", st.progress.toFixed(3)) }));
+    $$("li", panel).forEach((li) => triggersCrono.push(ScrollTrigger.create({ trigger: li, start: "top 62%",
+      onEnter: () => li.classList.add("activa"), onLeaveBack: () => li.classList.remove("activa") })));
+    ScrollTrigger.refresh();
+  };
+  animarCrono();
+
+  // J. Resultados: número gigante, mosaico de caras y casos
+  ScrollTrigger.create({ trigger: ".resultados", start: "top 70%", once: true, onEnter: () => $$(".resultados .cuenta").forEach(contar) });
+  gsap.from(".res-mas, .res-medicos", { opacity: 0, letterSpacing: "0.4em", duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".resultados", start: "top 70%", once: true } });
+  gsap.from(".cara", { scale: 0, rotate: () => gsap.utils.random(-25, 25), duration: 0.55, ease: "back.out(2)", stagger: { each: 0.035, from: "random" },
+    scrollTrigger: { trigger: ".mosaico", start: "top 85%", once: true } });
+  gsap.from(".caso", { y: 50, opacity: 0, duration: 0.8, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: ".casos", start: "top 85%", once: true } });
+
+  // K. Documentos: la lista se marca sola
+  $$(".lista-docs li").forEach((li, i) => {
+    const v = $(".visto", li), L = v.getTotalLength();
+    gsap.set(v, { strokeDasharray: L, strokeDashoffset: L });
+    ScrollTrigger.create({ trigger: li, start: "top 75%", once: true, onEnter: () => {
+      gsap.delayedCall(i * 0.12, () => { li.classList.add("lista"); gsap.to(v, { strokeDashoffset: 0, duration: 0.45, delay: 0.1, ease: "power2.out" }); });
+    } });
+  });
+
+  // L. Instagram: las tarjetas caen como fotos sobre la mesa
+  gsap.from(".insta-post", { y: 60, rotate: () => gsap.utils.random(-6, 6), opacity: 0, duration: 0.8, stagger: 0.08, ease: "power3.out",
+    scrollTrigger: { trigger: ".insta-grid", start: "top 85%", once: true }, clearProps: "transform" });
+
+  // M. Agenda: el sello se estampa
+  gsap.from(".sello svg", { scale: 2.2, rotate: -40, opacity: 0, duration: 0.9, ease: "back.out(1.4)", scrollTrigger: { trigger: ".agenda", start: "top 65%", once: true } });
+
+  // N. Botones magnéticos (solo con mouse)
+  if (punteroFino) {
+    $$(".boton-iman").forEach((b) => {
+      b.addEventListener("pointermove", (e) => {
+        const r = b.getBoundingClientRect();
+        gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * 0.25, y: (e.clientY - r.top - r.height / 2) * 0.35, duration: 0.3, ease: "power3.out" });
+      });
+      b.addEventListener("pointerleave", () => gsap.to(b, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, .45)" }));
     });
   }
-}
 
-/* ─── D. Parallax hero illustration ─── */
-gsap.to('.hero-illustration', {
-  y: -70,
-  ease: 'none',
-  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-});
-
-/* ─── E. Highlight bars por ScrollTrigger ─── */
-document.querySelectorAll('.highlight-bar').forEach(bar => {
-  gsap.fromTo(bar,
-    { scaleX: 0, transformOrigin: 'left' },
-    {
-      scaleX: 1,
-      duration: 0.7,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: bar, start: 'top 88%' }
-    }
-  );
-});
-
-/* ─── F. Fade-up escalonado por grupo ─── */
-function fadeUpGroup(selector, delay = 0.09) {
-  const all = gsap.utils.toArray(selector);
-  if (!all.length) return;
-  const sections = [...new Set(all.map(el => el.closest('section, .container') || document.body))];
-  sections.forEach(sec => {
-    const group = all.filter(el => sec.contains(el));
-    if (!group.length) return;
-    gsap.fromTo(group,
-      { opacity: 0, y: 36 },
-      {
-        opacity: 1, y: 0,
-        duration: 0.65,
-        ease: 'power3.out',
-        stagger: delay,
-        scrollTrigger: { trigger: group[0], start: 'top 88%' }
-      }
-    );
-  });
-}
-fadeUpGroup('.solo-card');
-fadeUpGroup('.servicio-card', 0.07);
-fadeUpGroup('.etapa', 0.1);
-fadeUpGroup('.mito-card', 0.08);
-fadeUpGroup('.caso-card', 0.1);
-fadeUpGroup('.doc-item', 0.1);
-
-/* ─── G. Títulos de sección ─── */
-gsap.utils.toArray('.section-title, .section-sub, .section-label').forEach(el => {
-  gsap.fromTo(el,
-    { opacity: 0, y: 22 },
-    { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%' } }
-  );
-});
-
-/* ─── H. Counter ─── */
-{
-  const counterEl = document.querySelector('.counter-grande');
-  if (counterEl) {
-    const target = parseInt(counterEl.dataset.target, 10);
-    const obj    = { val: 0 };
-    gsap.to(obj, {
-      val: target,
-      duration: 2,
-      ease: 'power2.out',
-      snap: { val: 1 },
-      onUpdate: () => { counterEl.textContent = Math.round(obj.val); },
-      scrollTrigger: { trigger: counterEl, start: 'top 80%' }
-    });
-  }
-}
-
-/* ─── I. Checklist draw (SVG stroke-dashoffset) ─── */
-document.querySelectorAll('.check-path').forEach((path, i) => {
-  const len = path.getTotalLength ? path.getTotalLength() : 20;
-  gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-  gsap.to(path, {
-    strokeDashoffset: 0,
-    duration: 0.55,
-    ease: 'power2.out',
-    delay: i * 0.18,
-    scrollTrigger: { trigger: path.closest('.doc-item'), start: 'top 85%' }
-  });
-});
-
-/* ─── J. Siluetas mosaico ─── */
-gsap.fromTo('.silueta',
-  { opacity: 0, scale: 0.5 },
-  {
-    opacity: 1, scale: 1,
-    duration: 0.4,
-    ease: 'back.out(1.5)',
-    stagger: { each: 0.04, from: 'random' },
-    scrollTrigger: { trigger: '.mosaico-grid', start: 'top 82%' }
-  }
-);
-
-/* ─── K. Cronograma items ─── */
-gsap.utils.toArray('.crono-item').forEach((item, i) => {
-  gsap.fromTo(item,
-    { opacity: 0, x: -20 },
-    {
-      opacity: 1, x: 0,
-      duration: 0.5,
-      ease: 'power3.out',
-      delay: i * 0.08,
-      scrollTrigger: { trigger: item, start: 'top 90%' }
-    }
-  );
-});
-
-/* ─── L. Agenda CTA entrance ─── */
-gsap.fromTo('.agenda-content > *',
-  { opacity: 0, y: 28 },
-  {
-    opacity: 1, y: 0,
-    duration: 0.65,
-    ease: 'power3.out',
-    stagger: 0.1,
-    scrollTrigger: { trigger: '.agenda-content', start: 'top 80%' }
-  }
-);
-
-/* ─── M. Botón magnético ─── */
-document.querySelectorAll('.btn-magnetic').forEach(btn => {
-  btn.addEventListener('mousemove', e => {
-    const r  = btn.getBoundingClientRect();
-    const dx = (e.clientX - (r.left + r.width  / 2)) * 0.22;
-    const dy = (e.clientY - (r.top  + r.height / 2)) * 0.22;
-    gsap.to(btn, { x: dx, y: dy, duration: 0.25, ease: 'power3.out' });
-  });
-  btn.addEventListener('mouseleave', () => {
-    gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.45)' });
-  });
-});
-
-} // fin else motionOK
+  // Recalcular cuando cargan las fuentes (cambian alturas)
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
+})();
