@@ -1,0 +1,15 @@
+/* POR QUÉ NO HACERLO SOLO · tres riesgos numerados */
+.solo .entrada { margin-bottom: clamp(36px, 6vw, 64px); }
+.riesgos { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--texto); }
+.riesgos li { padding: 26px 26px 6px 0; border-right: 1px solid var(--linea); position: relative; }
+.riesgos li + li { padding-left: 26px; }
+.riesgos li:last-child { border-right: 0; }
+.riesgo-n { font-family: "Oswald", sans-serif; font-size: 56px; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--naranja); display: block; margin-bottom: 14px; }
+.riesgos h3 { font-size: 19px; margin-bottom: 8px; }
+.riesgos p { color: var(--suave); }
+
+@media (max-width: 900px) {
+  .riesgos { grid-template-columns: 1fr; border-top: 0; }
+  .riesgos li, .riesgos li + li { padding: 22px 0; border-right: 0; border-top: 1px solid var(--linea); display: grid; grid-template-columns: 64px 1fr; column-gap: 14px; }
+  .riesgo-n { font-size: 44px; grid-row: span 2; margin: 0; }
+}

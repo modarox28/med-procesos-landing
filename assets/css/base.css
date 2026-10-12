@@ -1,0 +1,89 @@
+/* ==========================================================================
+   BASE · variables de la marca, fuentes, reset, tipografía y utilidades
+   Paleta tomada de @med.procesos. Cambia aquí los colores y se actualiza todo.
+   ========================================================================== */
+
+:root {
+  /* Colores de la marca */
+  --naranja: #E86A41;      /* naranja del logo: títulos grandes, fondos, detalles */
+  --naranja-ui: #C24E28;   /* naranja para botones y etiquetas con texto blanco pequeño (contraste AA) */
+  --naranja-osc: #A9421F;  /* hover de botones */
+  --lavanda: #706AB0;
+  --verde: #4AA9A3;
+  --verde-osc: #2F7F7A;    /* fondos verdes con texto blanco (contraste AA) */
+  --pizarra: #4D606E;
+  --pizarra-osc: #34434E;
+  --papel: #EBE8E5;
+  --papel-claro: #F5F3F0;
+  --texto: #2B2F36;
+  --suave: #56606B;        /* texto secundario */
+  --linea: rgba(43, 47, 54, .12);
+  --blanco: #fff;
+
+  /* Medidas */
+  --r: 18px;
+  --r-sm: 10px;
+  --max: 1180px;                    /* ancho máximo del contenido */
+  --gut: clamp(18px, 5vw, 56px);    /* margen lateral */
+  --nav-h: 68px;                    /* alto de la barra superior */
+
+  --sombra: 0 1px 2px rgba(43,47,54,.06), 0 10px 30px -12px rgba(43,47,54,.25);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+@media (max-width: 900px) { :root { --nav-h: 62px; } }
+
+/* Fuentes propias (sin servicios externos) */
+@font-face { font-family: "Oswald"; src: url("../fonts/Oswald-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/Inter-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("../fonts/Inter-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
+html.lenis, html.lenis body { height: auto; }
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--texto);
+  background-color: var(--papel);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+ol, ul { list-style: none; }
+
+/* Textura de papel, como el fondo de sus publicaciones (se aplica con la clase .papel) */
+body, .papel {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .4 0 0 0 0 .35 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Accesibilidad */
+:focus-visible { outline: 3px solid var(--naranja); outline-offset: 3px; border-radius: 6px; }
+.saltar { position: absolute; left: 12px; top: -60px; z-index: 300; background: var(--texto); color: #fff; padding: 10px 16px; border-radius: 8px; text-decoration: none; }
+.saltar:focus { top: 12px; }
+
+/* Estructura */
+.contenedor { width: min(100% - 2 * var(--gut), var(--max)); margin-inline: auto; }
+.seccion { padding: clamp(72px, 11vw, 140px) 0; position: relative; }
+.fondo-claro { background-color: var(--papel-claro); }
+
+/* Tipografía */
+.titulo, .hero-titulo, .mitos-titulo, .res-titulo {
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.005em;
+}
+.titulo { font-size: clamp(30px, 4.6vw, 54px); line-height: 1.2; margin-bottom: 18px; max-width: 18ch; }
+.titulo-grande { font-size: clamp(34px, 5.6vw, 68px); max-width: 20ch; }
+.entrada { font-size: clamp(16px, 1.5vw, 19px); color: var(--suave); max-width: 52ch; }
+.entrada-clara { color: #fff; }
+
+/* Movimiento reducido: sin animaciones y todo en su estado final */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}

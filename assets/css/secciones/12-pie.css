@@ -1,0 +1,10 @@
+/* PIE DE PÁGINA */
+.pie { background: var(--texto); color: #fff; padding-top: 40px; }
+.pie-in { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-bottom: 32px; }
+.pie-nav { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.pie-nav a { text-decoration: none; color: rgba(255,255,255,.75); font-size: 14px; padding: 6px 0; }
+.pie-nav a:hover { color: #fff; }
+.pie-aviso { border-top: 1px solid rgba(255,255,255,.12); padding: 16px var(--gut); text-align: center; font-size: 13px; color: rgba(255,255,255,.7); }
+.pie-aviso a { color: #fff; }
+
+@media (max-width: 640px) { .pie-in { flex-direction: column; align-items: flex-start; } }

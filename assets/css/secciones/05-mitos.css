@@ -1,0 +1,24 @@
+/* MITO O REALIDAD · tarjetas que giran en 3D (aria-pressed="true" = mostrando la realidad) */
+.mitos { background: var(--lavanda); color: #fff; overflow: hidden; }
+.mitos-titulo { font-size: clamp(56px, 11vw, 140px); line-height: .9; text-transform: uppercase; margin-bottom: 14px; }
+.mitos-titulo span { font-size: .42em; vertical-align: middle; color: rgba(255,255,255,.7); }
+.mitos .entrada { margin-bottom: 40px; }
+.mitos .desliza { color: #fff; }
+.mitos-lista { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.mito { position: relative; display: block; width: 100%; min-height: 230px; text-align: left; perspective: 1200px; border-radius: var(--r); }
+.mito-cara { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 26px 24px; border-radius: var(--r); backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: transform .8s var(--ease); box-shadow: 0 18px 40px -20px rgba(20,16,60,.6); }
+.mito-frente { background: #fff; color: var(--texto); }
+.mito-dorso { background: var(--texto); color: #fff; transform: rotateY(180deg); }
+.mito[aria-pressed="true"] .mito-frente { transform: rotateY(-180deg); }
+.mito[aria-pressed="true"] .mito-dorso { transform: rotateY(0); }
+.mito-tag { align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; background: var(--naranja-ui); color: #fff; margin-bottom: 16px; }
+.mito-tag-r { background: var(--verde-osc); }
+.mito-txt { font-size: 17px; font-weight: 700; line-height: 1.4; }
+.mito-dorso .mito-txt { font-weight: 400; font-size: 16px; color: #fff; }
+.mito-pista { margin-top: auto; padding-top: 14px; font-size: 13px; color: var(--lavanda); font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.mito-pista::after { content: ""; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid currentColor; background: no-repeat center / 12px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23706AB0' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M4 12a8 8 0 0 1 14-5.3M20 4v4h-4M20 12a8 8 0 0 1-14 5.3M4 20v-4h4'/%3E%3C/svg%3E"); }
+.mito-sello { position: absolute; right: 18px; bottom: 18px; width: 46px; height: 46px; fill: none; stroke: var(--verde); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transform: scale(0) rotate(-30deg); transition: transform .5s cubic-bezier(.3,1.6,.5,1) .45s; }
+.mito[aria-pressed="true"] .mito-sello { transform: scale(1) rotate(0); }
+
+@media (max-width: 1024px) { .mitos-lista { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .mito { flex: 0 0 84%; min-height: 250px; } }

@@ -1,0 +1,103 @@
+/* ==========================================================================
+   COMPONENTES · piezas que se repiten en varias secciones
+   Etiquetas, resaltador, botones, marca, navegación y carruseles.
+   ========================================================================== */
+
+/* Etiqueta (texto pequeño en mayúsculas sobre un bloque de color) */
+.etiqueta { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 6px 12px; border-radius: 6px; margin-bottom: 18px; }
+.etiqueta-naranja { background: var(--naranja-ui); color: #fff; }
+.etiqueta-lav { background: var(--lavanda); color: #fff; }
+.etiqueta-verde { background: var(--verde-osc); color: #fff; }
+.etiqueta-claro { background: rgba(255,255,255,.14); color: #fff; }
+.etiqueta-blanca { background: #fff; color: var(--verde-osc); }
+
+/* Resaltador: la franja de color que se "pinta" detrás del texto, como en sus posts.
+   El JS agrega .pintado cuando la frase entra en pantalla. */
+.resalta {
+  --c: var(--naranja);
+  background: linear-gradient(var(--c), var(--c)) no-repeat 0 65% / 0% 86%;
+  color: inherit;
+  padding: 0 .16em;
+  margin: 0 -.04em;
+  border-radius: .08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size .9s var(--ease), color .35s ease .25s;
+}
+.resalta-lav { --c: var(--lavanda); }
+.resalta.pintado { background-size: 100% 86%; color: #fff; }
+@media (prefers-reduced-motion: reduce) { .resalta { background-size: 100% 86%; color: #fff; } }
+
+/* Botones */
+.boton { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 12px 22px; border-radius: 12px; font-weight: 700; font-size: 15px; text-decoration: none; line-height: 1.2; transition: background .2s, color .2s, box-shadow .2s, border-color .2s; will-change: transform; }
+.boton svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.boton-sm { min-height: 40px; padding: 8px 16px; font-size: 14px; }
+.boton-grande { min-height: 56px; padding: 14px 26px; font-size: 16px; }
+.boton-naranja { background: var(--naranja-ui); color: #fff; box-shadow: 0 8px 22px -10px rgba(232,106,65,.9); }
+.boton-naranja:hover { background: var(--naranja-osc); }
+.boton-linea { border: 1.5px solid currentColor; color: var(--texto); }
+.boton-linea:hover { background: var(--texto); color: var(--papel); border-color: var(--texto); }
+.boton-blanco { background: #fff; color: var(--verde-osc); box-shadow: 0 12px 30px -14px rgba(0,0,0,.5); }
+.boton-blanco:hover { background: var(--papel-claro); }
+.boton-linea-blanca { border: 1.5px solid rgba(255,255,255,.75); color: #fff; }
+.boton-linea-blanca:hover { background: rgba(255,255,255,.14); }
+
+/* Marca (isotipo + MED / PROCESOS) */
+.marca { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.marca-iso { width: 40px; height: 40px; flex-shrink: 0; }
+.marca-txt { display: flex; flex-direction: column; line-height: 1; color: #3A5866; }
+.marca-txt b { font-weight: 700; font-size: 21px; letter-spacing: .04em; }
+.marca-txt small { font-size: 8.6px; font-weight: 700; letter-spacing: .47em; margin-top: 4px; }
+.marca-clara .marca-txt { color: #fff; }
+
+/* Navegación superior */
+.nav { position: fixed; inset: 0 0 auto 0; z-index: 100; height: var(--nav-h); transition: background .3s, box-shadow .3s, transform .4s var(--ease); }
+.nav.con-fondo { background: rgba(235,232,229,.86); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 1px 0 var(--linea); }
+.nav.oculta { transform: translateY(-100%); }
+.nav-in { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.menu { display: flex; align-items: center; gap: 4px; }
+.menu a:not(.boton) { text-decoration: none; font-size: 14.5px; font-weight: 700; color: var(--suave); padding: 8px 12px; border-radius: 8px; transition: color .2s; }
+.menu a:not(.boton):hover { color: var(--naranja); }
+.menu .boton { margin-left: 8px; }
+
+/* Botón de menú (hamburguesa), solo en celular y tablet */
+.nav-boton { display: none; width: 44px; height: 44px; border-radius: 12px; position: relative; z-index: 2; }
+.nav-boton span { position: absolute; left: 12px; right: 12px; height: 2px; background: var(--texto); border-radius: 2px; transition: transform .35s var(--ease), top .35s var(--ease); }
+.nav-boton span:first-child { top: 17px; }
+.nav-boton span:last-child { top: 25px; }
+.nav-boton[aria-expanded="true"] span:first-child { top: 21px; transform: rotate(45deg); }
+.nav-boton[aria-expanded="true"] span:last-child { top: 21px; transform: rotate(-45deg); }
+
+@media (max-width: 900px) {
+  .nav-boton { display: block; }
+  /* Menú a pantalla completa que se abre en círculo desde el botón */
+  .menu {
+    position: fixed; top: 0; left: 0; z-index: 1;
+    width: 100vw; height: 100vh; height: 100dvh;
+    flex-direction: column; align-items: flex-start; justify-content: center; gap: 6px;
+    padding: 80px var(--gut) 40px;
+    background: var(--papel);
+    overflow-y: auto;
+    clip-path: circle(0 at calc(100% - 40px) 31px);
+    transition: clip-path .6s var(--ease), visibility 0s .6s;
+    visibility: hidden;
+  }
+  .menu.abierto { clip-path: circle(150% at calc(100% - 40px) 31px); visibility: visible; transition: clip-path .7s var(--ease); }
+  .menu a:not(.boton) { font-family: "Oswald", sans-serif; font-size: 40px; color: var(--texto); padding: 4px 0; }
+  .menu .boton { margin: 22px 0 0; }
+  /* Con el menú abierto, la barra no puede tener desenfoque ni desplazamiento: ambos
+     encierran el menú (position: fixed) dentro de la barra y lo recortan. */
+  .nav.menu-abierto { -webkit-backdrop-filter: none; backdrop-filter: none; transform: none; background: transparent; box-shadow: none; }
+}
+
+/* Carruseles en celular (servicios, mitos e Instagram) e indicador "Desliza" */
+.desliza { display: none; }
+@media (max-width: 640px) {
+  /* .contenedor .carrusel: más específico que las reglas de cuadrícula de cada sección */
+  .contenedor .carrusel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin-inline: calc(-1 * var(--gut)); padding: 6px var(--gut) 18px; scroll-padding-inline: var(--gut); scrollbar-width: none; }
+  .contenedor .carrusel::-webkit-scrollbar { display: none; }
+  .contenedor .carrusel > * { scroll-snap-align: start; }
+  .desliza { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; margin: -4px 0 10px; color: var(--suave); }
+  .desliza::after { content: ""; width: 28px; height: 2px; background: currentColor; border-radius: 2px; animation: desliza 1.6s var(--ease) infinite; }
+}
+@keyframes desliza { 50% { transform: translateX(8px); } }

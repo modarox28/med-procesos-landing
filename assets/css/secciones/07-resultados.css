@@ -1,0 +1,19 @@
+/* RESULTADOS · número gigante, mosaico de caras ilustradas y casos */
+.resultados { background: var(--naranja); color: #fff; padding: clamp(80px, 12vw, 150px) 0; overflow: hidden; text-align: center; }
+.res-titulo { display: flex; flex-direction: column; align-items: center; gap: .06em; line-height: .9; text-transform: uppercase; }
+.res-mas, .res-medicos { font-size: clamp(30px, 5vw, 64px); }
+.res-num { font-size: clamp(130px, 26vw, 330px); letter-spacing: -.02em; }
+/* Texto pequeño en oscuro: el blanco sobre este naranja no alcanza el contraste AA */
+.res-sub { font-size: clamp(17px, 2vw, 22px); font-weight: 700; margin: 14px 0 46px; color: #1A1C20; }
+.mosaico { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; max-width: 880px; margin: 0 auto 56px; }
+.cara { width: 100%; height: auto; }
+.casos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: left; }
+.caso { background: #fff; color: var(--texto); border-radius: var(--r); padding: 26px; box-shadow: 0 16px 36px -22px rgba(80,20,0,.6); }
+.caso-t { font-family: "Oswald", sans-serif; font-size: 44px; line-height: 1; margin-bottom: 10px; color: var(--naranja-ui); }
+.caso p:last-child { color: var(--suave); }
+.res-nota { margin-top: 26px; font-size: 13px; color: #1A1C20; }
+
+@media (max-width: 900px) {
+  .casos { grid-template-columns: 1fr; }
+  .mosaico { grid-template-columns: repeat(8, 1fr); gap: 7px; }
+}

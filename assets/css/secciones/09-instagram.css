@@ -1,0 +1,23 @@
+/* INSTAGRAM · publicaciones oficiales (embed). Antes de cargar se ve la tarjeta de color. */
+.insta-cabeza { display: flex; align-items: end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 36px; }
+.insta-cabeza .titulo { margin-bottom: 0; }
+.insta-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.insta-tarjeta { margin: 0; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; position: relative; }
+.insta-tarjeta > a { position: absolute; inset: 0; padding: 22px; display: flex; flex-direction: column; justify-content: flex-end; text-decoration: none; font-family: "Oswald", sans-serif; font-size: 21px; line-height: 1.15; transition: transform .4s var(--ease); }
+.insta-tarjeta > a:hover { transform: scale(1.02); }
+.insta-iso { position: absolute; left: 18px; top: 18px; width: 30px; height: 30px; }
+.insta-ig { position: absolute; right: 18px; top: 18px; width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; opacity: .85; }
+.insta-naranja { background: var(--naranja-ui); color: #fff; }
+.insta-lavanda { background: var(--lavanda); color: #fff; }
+.insta-verde { background: var(--verde-osc); color: #fff; }
+.insta-pizarra { background: var(--pizarra); color: #fff; }
+/* Embed ya cargado: Instagram cambia cada blockquote por un iframe y le copia los estilos en línea.
+   Por eso nunca se animan las publicaciones, y aquí se fuerza que queden visibles. */
+.insta-grid iframe, .insta-grid .instagram-media-rendered { opacity: 1 !important; visibility: visible !important; transform: none !important; aspect-ratio: auto !important; min-width: 0 !important; width: 100% !important; max-width: none !important; margin: 0 !important; border-radius: 14px !important; border: 0 !important; box-shadow: var(--sombra) !important; background: #fff !important; }
+.insta-nota { margin-top: 16px; font-size: 13px; color: var(--suave); }
+
+@media (max-width: 1180px) { .insta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; } }
+@media (max-width: 640px) {
+  .insta-grid { align-items: flex-start; max-width: none; }
+  .insta-grid > * { flex: 0 0 84% !important; }
+}

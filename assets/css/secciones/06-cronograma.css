@@ -1,0 +1,26 @@
+/* CRONOGRAMA · pestañas y línea de tiempo (--avance y .activa los pone el JS) */
+.crono-in { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 90px); align-items: start; }
+.crono-cabeza { position: sticky; top: calc(var(--nav-h) + 32px); }
+.pestanas { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 16px; }
+.pestana { min-height: 44px; padding: 10px 16px; border-radius: 10px; font-size: 14px; font-weight: 700; border: 1.5px solid var(--linea); background: #fff; color: var(--suave); transition: all .2s; }
+.pestana[aria-selected="true"] { background: var(--texto); border-color: var(--texto); color: #fff; }
+.aviso { font-size: 13px; color: var(--suave); }
+.crono { position: relative; padding-left: 34px; }
+.crono::before, .crono::after { content: ""; position: absolute; left: 9px; top: 10px; bottom: 10px; width: 2px; background: var(--linea); }
+.crono::after { background: var(--naranja); transform-origin: top; transform: scaleY(var(--avance, 0)); }
+.crono li { position: relative; padding: 18px 0 26px; border-bottom: 1px solid var(--linea); display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: baseline; }
+.crono li::before { content: ""; position: absolute; left: -31px; top: 24px; width: 14px; height: 14px; border-radius: 50%; background: var(--papel); border: 2px solid rgba(43,47,54,.3); transition: background .3s, border-color .3s, transform .3s; z-index: 1; }
+.crono li.activa::before { background: var(--naranja); border-color: var(--naranja); transform: scale(1.25); }
+.crono time { font-family: "Oswald", sans-serif; font-size: 26px; line-height: 1; color: rgba(43,47,54,.35); transition: color .3s; }
+.crono li.activa time { color: var(--naranja); }
+.crono span { color: var(--texto); }
+
+@media (max-width: 900px) {
+  .crono-in { grid-template-columns: 1fr; }
+  .crono-cabeza { position: static; }
+}
+@media (max-width: 640px) {
+  .crono li { grid-template-columns: 1fr; gap: 6px; padding: 14px 0 18px; }
+  .crono li::before { top: 18px; }
+  .crono time { font-size: 22px; }
+}

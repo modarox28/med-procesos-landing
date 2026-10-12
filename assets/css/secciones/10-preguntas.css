@@ -1,0 +1,17 @@
+/* PREGUNTAS FRECUENTES · acordeón con <details> (el JS anima la altura) */
+.faq-in { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(32px, 6vw, 90px); align-items: start; }
+.faq-item { border-bottom: 1px solid var(--linea); }
+.faq-item:first-child { border-top: 1px solid var(--linea); }
+.faq-item summary { list-style: none; display: flex; justify-content: space-between; gap: 18px; align-items: center; padding: 22px 0; font-weight: 700; font-size: 17px; cursor: pointer; min-height: 48px; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-mas { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--linea); position: relative; flex-shrink: 0; transition: background .3s, border-color .3s, transform .4s var(--ease); }
+.faq-mas::before, .faq-mas::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; margin: -1px 0 0 -6px; background: var(--texto); border-radius: 2px; }
+.faq-mas::after { transform: rotate(90deg); transition: transform .3s; }
+.faq-item[open] .faq-mas { background: var(--naranja); border-color: var(--naranja); transform: rotate(180deg); }
+.faq-item[open] .faq-mas::before, .faq-item[open] .faq-mas::after { background: #fff; }
+.faq-item[open] .faq-mas::after { transform: rotate(0); }
+.faq-r { overflow: hidden; }
+.faq-r p { padding: 0 48px 24px 0; color: var(--suave); }
+
+@media (max-width: 900px) { .faq-in { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .faq-r p { padding-right: 0; } }

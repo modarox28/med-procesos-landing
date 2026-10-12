@@ -101,6 +101,27 @@ test('menú de celular: abre, navega y se cierra', async ({ page, isMobile }) =>
   await expect(page.locator('#menu')).not.toHaveClass(/abierto/);
 });
 
+test('menú de celular: después de bajar, ocupa toda la pantalla y sus enlaces se ven', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'solo celular');
+  // Bajar activa el fondo con blur del nav (antes encerraba el menú en ~120px de alto)
+  await page.evaluate(() => window.scrollTo(0, 2500));
+  await expect(page.locator('.nav')).toHaveClass(/con-fondo/);
+  await page.evaluate(() => window.scrollTo(0, 2300)); // subir un poco para que el nav reaparezca
+  await page.locator('.nav-boton').click();
+  await expect(page.locator('#menu')).toHaveClass(/abierto/);
+  await page.waitForTimeout(800);
+  const { alto, vh, ultimoVisible } = await page.evaluate(() => {
+    const m = document.querySelector('#menu').getBoundingClientRect();
+    const enlaces = [...document.querySelectorAll('#menu a')];
+    const u = enlaces[enlaces.length - 1].getBoundingClientRect();
+    return { alto: m.height, vh: window.innerHeight, ultimoVisible: u.bottom <= window.innerHeight && u.top >= 0 };
+  });
+  expect(alto).toBeGreaterThanOrEqual(vh - 1);
+  expect(ultimoVisible).toBe(true);
+  await page.locator('#menu a[href="#agenda"]').click();
+  await expect(page.locator('#menu')).not.toHaveClass(/abierto/);
+});
+
 test('al terminar las animaciones el contenido queda visible y el contador llega a 120', async ({ page }) => {
   await recorrer(page);
   await page.waitForTimeout(2000);

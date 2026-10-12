@@ -7,7 +7,7 @@ module.exports = defineConfig({
   testDir: './tests',
   timeout: 45000,
   reporter: 'list',
-  webServer: { command: 'python3 -m http.server 8090', port: 8090, reuseExistingServer: true },
+  webServer: { command: (process.platform === 'win32' ? 'python' : 'python3') + ' -m http.server 8090', port: 8090, reuseExistingServer: true },
   use: { baseURL: 'http://localhost:8090', headless: true, launchOptions },
   projects: [
     { name: 'escritorio', use: { viewport: { width: 1440, height: 900 } } },

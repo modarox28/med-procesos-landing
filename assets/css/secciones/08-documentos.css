@@ -1,0 +1,13 @@
+/* DOCUMENTOS · lista que se marca sola (el JS agrega .lista a cada fila) */
+.docs-in { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 90px); align-items: center; }
+.docs-in .entrada { margin-bottom: 28px; }
+.lista-docs li { display: flex; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--linea); }
+.lista-docs li:first-child { border-top: 1px solid var(--linea); }
+.lista-docs svg { width: 34px; height: 34px; flex-shrink: 0; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.lista-docs rect { stroke: rgba(43,47,54,.3); stroke-width: 2; transition: fill .3s, stroke .3s; }
+.lista-docs .visto { stroke: #fff; stroke-width: 3; }
+.lista-docs li.lista rect { fill: var(--verde); stroke: var(--verde); }
+.lista-docs h3 { font-size: 18px; margin-bottom: 4px; }
+.lista-docs p { color: var(--suave); font-size: 15px; }
+
+@media (max-width: 900px) { .docs-in { grid-template-columns: 1fr; } }
