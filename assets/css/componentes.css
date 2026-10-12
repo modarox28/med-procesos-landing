@@ -101,3 +101,24 @@
   .desliza::after { content: ""; width: 28px; height: 2px; background: currentColor; border-radius: 2px; animation: desliza 1.6s var(--ease) infinite; }
 }
 @keyframes desliza { 50% { transform: translateX(8px); } }
+
+/* WhatsApp flotante: aparece después del hero (ver modulos/whatsapp-flotante.js) */
+.wa-flotante {
+  position: fixed; z-index: 90;
+  right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom));
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 52px; padding: 0 18px 0 14px; border-radius: 999px;
+  background: #1F7A4D; color: #fff; text-decoration: none; font-weight: 700; font-size: 15px;
+  box-shadow: 0 12px 28px -10px rgba(0,0,0,.45);
+  opacity: 0; transform: translateY(24px) scale(.9); pointer-events: none; visibility: hidden;
+  transition: opacity .35s var(--ease), transform .35s var(--ease), visibility 0s .35s, background .2s;
+}
+.wa-flotante.visible { opacity: 1; transform: none; pointer-events: auto; visibility: visible; transition-delay: 0s; }
+.wa-flotante:hover { background: #18633E; }
+.wa-flotante svg { width: 24px; height: 24px; fill: currentColor; }
+.nav.menu-abierto ~ .wa-flotante, body:has(.nav.menu-abierto) .wa-flotante { opacity: 0; pointer-events: none; visibility: hidden; }
+@media (max-width: 640px) {
+  .wa-flotante { padding: 0; width: 56px; min-height: 56px; justify-content: center; }
+  .wa-flotante span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+@media print { .wa-flotante { display: none; } }

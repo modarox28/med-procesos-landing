@@ -58,8 +58,8 @@ test('todos los enlaces internos llevan a una sección que existe', async ({ pag
 test('los enlaces externos abren en pestaña nueva con rel="noopener"', async ({ page }) => {
   const malos = await page.evaluate(() => [...document.querySelectorAll('a[href^="http"]')].filter((a) => a.target !== '_blank' || !/noopener/.test(a.rel)).map((a) => a.href));
   expect(malos).toEqual([]);
-  await expect(page.locator('a[href^="https://calendly.com/asesorias-medprocesos/sesion-de-claridad"]')).toHaveCount(1);
-  await expect(page.locator('a[href="https://api.whatsapp.com/message/KINW7CGQKIVFO1"]')).toHaveCount(1);
+  await expect(page.locator('a[href^="https://calendly.com/asesorias-medprocesos/sesion-de-claridad"]')).toHaveCount(2); // agenda y resultado del test
+  await expect(page.locator('a[href="https://api.whatsapp.com/message/KINW7CGQKIVFO1"]')).toHaveCount(2); // agenda y botón flotante
 });
 
 test('mito o realidad: la tarjeta se voltea al tocarla', async ({ page }) => {
@@ -187,4 +187,95 @@ test('Instagram: cuando el embed reemplaza las tarjetas por iframes, quedan visi
 
 test('el pie aclara que es un concepto no oficial', async ({ page }) => {
   await expect(page.locator('.pie-aviso')).toContainText('Sitio no oficial de Med Procesos');
+});
+
+test('test de etapa: con clics llega al resultado correcto y se puede repetir', async ({ page }) => {
+  const test_ = page.locator('#test-etapa');
+  await test_.scrollIntoViewIfNeeded();
+  await expect(test_.locator('.test-pregunta.activa legend')).toContainText('título');
+  await test_.locator('label.opcion', { hasText: 'Sí, ya lo tengo' }).click();
+  await expect(test_.locator('.test-n')).toHaveText('2');
+  await test_.locator('label.opcion', { hasText: 'Tengo la precaria' }).click();
+  await expect(test_.locator('.test-n')).toHaveText('3');
+  // Atrás conserva la respuesta anterior
+  await test_.locator('.test-atras').click();
+  await expect(test_.locator('.test-n')).toHaveText('2');
+  await expect(test_.locator('input[name=dni][value=precaria]')).toBeChecked();
+  await test_.locator('label.opcion', { hasText: 'Tengo la precaria' }).click();
+  await test_.locator('label.opcion', { hasText: 'Ya presenté el examen' }).click();
+  await test_.locator('label.opcion', { hasText: 'En la próxima convocatoria' }).click();
+  await expect(test_.locator('.test-resultado')).toBeVisible();
+  await expect(test_.locator('.test-titulo')).toHaveText('Adjudicación y matrícula');
+  await expect(test_.locator('.test-num')).toHaveText('04');
+  await expect(test_.locator('.test-servicios li')).toHaveCount(3);
+  await test_.locator('.test-copiar').click();
+  await expect(test_.locator('.test-copiado a')).toHaveAttribute('href', /api\.whatsapp\.com/);
+  await test_.locator('.test-repetir').click();
+  await expect(test_.locator('.test-resultado')).toBeHidden();
+  await expect(test_.locator('.test-n')).toHaveText('1');
+  expect(page._errores).toEqual([]);
+});
+
+test('test de etapa: con teclado las flechas no saltan de pregunta y Enter avanza', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'solo teclado');
+  const test_ = page.locator('#test-etapa');
+  await test_.scrollIntoViewIfNeeded();
+  await test_.locator('input[name=titulo]').first().focus();
+  await page.keyboard.press('ArrowDown'); // elige "En trámite"
+  await page.waitForTimeout(400);
+  await expect(test_.locator('.test-n')).toHaveText('1');
+  await page.keyboard.press('Enter');
+  await expect(test_.locator('.test-n')).toHaveText('2');
+  for (const v of ['no', 'no', 'pronto']) {
+    await test_.locator(`.test-pregunta.activa input[value=${v}]`).check();
+    await page.keyboard.press('Enter');
+  }
+  await expect(test_.locator('.test-titulo')).toHaveText('DNI y convalidación');
+  await expect(test_.locator('.test-aviso')).toBeVisible();
+});
+
+test('test de etapa: la lógica asigna cada etapa', async ({ page }) => {
+  const r = await page.evaluate(async () => {
+    const { calcularEtapa } = await import('/assets/js/modulos/etapa.js');
+    const c = (titulo, dni, examen, cuando = 'anio') => calcularEtapa({ titulo, dni, examen, cuando }).etapa;
+    return [c('no', 'si', 'presentado'), c('tramite', 'si', 'no'), c('si', 'no', 'no'), c('si', 'precaria', 'preparando'), c('si', 'si', 'presentado')];
+  });
+  expect(r).toEqual([1, 2, 2, 3, 4]);
+});
+
+test('WhatsApp flotante: oculto en el inicio, visible al bajar y oculto en la agenda', async ({ page }) => {
+  const wa = page.locator('.wa-flotante');
+  await expect(wa).not.toHaveClass(/visible/);
+  await page.locator('#mitos').scrollIntoViewIfNeeded();
+  await expect(wa).toHaveClass(/visible/);
+  await expect(wa).toHaveAttribute('href', 'https://api.whatsapp.com/message/KINW7CGQKIVFO1');
+  await page.locator('#agenda').scrollIntoViewIfNeeded();
+  await page.evaluate(() => document.querySelector('#agenda').scrollIntoView({ block: 'center' }));
+  await expect(wa).not.toHaveClass(/visible/);
+});
+
+test('vista previa al compartir: imagen, título y datos estructurados', async ({ page, request }) => {
+  const og = await page.locator('meta[property="og:image"]').getAttribute('content');
+  expect(og).toMatch(/^https:\/\/modarox28\.github\.io\/med-procesos-landing\/assets\/img\/og\.png$/);
+  expect((await request.get('/assets/img/og.png')).ok()).toBe(true);
+  expect((await request.get('/assets/img/apple-touch-icon.png')).ok()).toBe(true);
+  expect((await request.get('/sitemap.xml')).ok()).toBe(true);
+  const ld = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
+  expect(ld['@type']).toBe('WebPage');
+  expect(ld.about.name).toBe('Med Procesos');
+});
+
+test('página 404 con la marca y enlace al inicio', async ({ page }) => {
+  // En GitHub Pages las rutas llevan /med-procesos-landing/; aquí se sirven desde la carpeta local
+  await page.route(/\/med-procesos-landing\//, (r) => {
+    const ruta = new URL(r.request().url()).pathname.replace('/med-procesos-landing/', '') || 'index.html';
+    r.fulfill({ path: path.join(__dirname, '..', ruta.split('?')[0]) });
+  });
+  const errores = [];
+  page.on('console', (m) => m.type() === 'error' && errores.push(m.text()));
+  await page.goto('/404.html');
+  await expect(page.locator('h1')).toContainText('se desvió del camino');
+  await expect(page.locator('a.boton-naranja')).toHaveAttribute('href', '/med-procesos-landing/');
+  expect(await page.evaluate(() => getComputedStyle(document.querySelector('.e404-n')).fontFamily)).toContain('Oswald');
+  expect(errores).toEqual([]);
 });

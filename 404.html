@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="robots" content="noindex">
+<title>Página no encontrada · Med Procesos</title>
+<meta name="theme-color" content="#E86A41">
+<!-- GitHub Pages muestra este archivo en cualquier dirección que no exista, por eso las rutas son absolutas -->
+<link rel="icon" href="/med-procesos-landing/assets/img/isotipo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/med-procesos-landing/assets/css/base.css?v=15">
+<link rel="stylesheet" href="/med-procesos-landing/assets/css/componentes.css?v=15">
+<style>
+  .e404 { min-height: 100dvh; display: grid; place-items: center; padding: 40px var(--gut); text-align: center; }
+  .e404-in { max-width: 560px; }
+  .e404 .marca { margin-bottom: 40px; }
+  .e404-ruta { width: min(100%, 420px); margin: 0 auto 8px; overflow: visible; }
+  .e404-ruta .linea { fill: none; stroke: var(--naranja); stroke-width: 3; stroke-dasharray: 2 10; stroke-linecap: round; }
+  .e404-ruta .punto { fill: var(--lavanda); }
+  .e404-ruta .avion { fill: var(--pizarra); transform-box: fill-box; transform-origin: center; animation: e404-vuelo 3.2s ease-in-out infinite; }
+  @keyframes e404-vuelo { 0%, 100% { transform: translate(0, 0) rotate(28deg); } 50% { transform: translate(14px, -10px) rotate(48deg); } }
+  .e404-n { font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; font-size: clamp(96px, 22vw, 168px); line-height: 1; color: var(--naranja); }
+  .e404 h1 { font-family: "Oswald", "Arial Narrow", sans-serif; font-size: clamp(26px, 4vw, 38px); line-height: 1.2; margin: 6px 0 12px; }
+  .e404 p { color: var(--suave); }
+  .e404-botones { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 28px; }
+</style>
+</head>
+<body>
+<main class="e404">
+  <div class="e404-in">
+    <a href="/med-procesos-landing/" class="marca" aria-label="Med Procesos, inicio">
+      <img class="marca-iso" src="/med-procesos-landing/assets/img/isotipo.svg" alt="" width="40" height="40">
+      <span class="marca-txt"><b>MED</b><small>PROCESOS</small></span>
+    </a>
+    <svg class="e404-ruta" viewBox="0 0 420 110" aria-hidden="true">
+      <path class="linea" d="M20 90 C 120 90, 160 30, 250 40"/>
+      <circle class="punto" cx="20" cy="90" r="8"/>
+      <path class="avion" transform="translate(330 30)" d="M0-7 2-1 9 3V5L2 3 1.5 7 4 9V10.5L0 9.6-4 10.5V9L-1.5 7-2 3-9 5V3L-2-1Z"/>
+    </svg>
+    <p class="e404-n">404</p>
+    <h1>Esta página se desvió del camino.</h1>
+    <p>La dirección no existe o cambió. Vuelve al inicio y retoma la ruta hacia tu residencia.</p>
+    <div class="e404-botones">
+      <a class="boton boton-naranja" href="/med-procesos-landing/">Volver al inicio</a>
+      <a class="boton boton-linea" href="/med-procesos-landing/#preguntas">Ver preguntas frecuentes</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

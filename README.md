@@ -23,6 +23,8 @@ Landing page informativa con reserva de asesorías para **Med Procesos**, que ac
   - la lista de documentos se marca sola;
   - un sello se estampa junto a la reserva.
 - **Celular primero:** carruseles deslizables, menú a pantalla completa y scroll nativo en pantallas táctiles.
+- **Test "¿En qué etapa estás?":** 4 preguntas que ubican al médico en una de las 4 etapas, le sugieren servicios y le permiten copiar un resumen para enviarlo por WhatsApp. No guarda nada.
+- **Listo para compartir:** imagen de vista previa, datos estructurados, sitemap y página 404 propia.
 - **Accesible:** contraste AA, navegación con teclado y respeto por "reducir movimiento".
 - **Seguro:**
   - Content-Security-Policy;
@@ -34,23 +36,26 @@ Landing page informativa con reserva de asesorías para **Med Procesos**, que ac
 ```
 med-procesos-landing/
 ├── index.html                  ← todo el contenido (textos, enlaces, publicaciones de Instagram)
+├── 404.html                    ← página de error con la marca (GitHub Pages la usa sola)
+├── sitemap.xml                 ← mapa del sitio para buscadores
 ├── assets/
 │   ├── css/
 │   │   ├── base.css            ← colores, fuentes, tamaños, reset y utilidades (.contenedor, .seccion)
-│   │   ├── componentes.css     ← piezas reutilizables: botones, etiquetas, resaltados, barra y menú, carrusel
+│   │   ├── componentes.css     ← piezas reutilizables: botones, etiquetas, resaltados, barra y menú, carrusel, WhatsApp flotante
 │   │   └── secciones/          ← un archivo por sección, en el mismo orden de la página
 │   │       ├── 01-hero.css         (#inicio: título, mapa)
 │   │       ├── 02-por-que.css      (#por-que: riesgos de hacerlo solo)
 │   │       ├── 03-camino.css       (#camino: 4 etapas)
 │   │       ├── 04-servicios.css    (#servicios: baraja de tarjetas)
-│   │       ├── 05-mitos.css        (#mitos: tarjetas que giran)
-│   │       ├── 06-cronograma.css   (#cronograma: pestañas y fechas)
-│   │       ├── 07-resultados.css   (#resultados: contador y caras)
-│   │       ├── 08-documentos.css   (#documentos: lista de chequeo)
-│   │       ├── 09-instagram.css    (#instagram: publicaciones)
-│   │       ├── 10-preguntas.css    (#preguntas: acordeón)
-│   │       ├── 11-agenda.css       (#agenda: reserva y sello)
-│   │       └── 12-pie.css          (pie de página)
+│   │       ├── 05-etapa.css        (#etapa: test "¿En qué etapa estás?")
+│   │       ├── 06-mitos.css        (#mitos: tarjetas que giran)
+│   │       ├── 07-cronograma.css   (#cronograma: pestañas y fechas)
+│   │       ├── 08-resultados.css   (#resultados: contador y caras)
+│   │       ├── 09-documentos.css   (#documentos: lista de chequeo)
+│   │       ├── 10-instagram.css    (#instagram: publicaciones)
+│   │       ├── 11-preguntas.css    (#preguntas: acordeón)
+│   │       ├── 12-agenda.css       (#agenda: reserva y sello)
+│   │       └── 13-pie.css          (pie de página)
 │   ├── js/
 │   │   ├── main.js             ← punto de entrada: arranca interacciones y animaciones
 │   │   ├── modulos/            ← comportamiento que funciona siempre (con o sin animaciones)
@@ -60,6 +65,8 @@ med-procesos-landing/
 │   │   │   ├── mitos.js            voltear tarjetas
 │   │   │   ├── cronograma.js       pestañas accesibles
 │   │   │   ├── preguntas.js        acordeón
+│   │   │   ├── etapa.js            test de etapa (preguntas, cálculo y resultado)
+│   │   │   ├── whatsapp-flotante.js botón flotante que aparece después del hero
 │   │   │   ├── instagram.js        carga diferida del embed de Instagram
 │   │   │   └── contadores.js       números que cuentan
 │   │   └── animaciones/        ← solo efectos visuales (GSAP + ScrollTrigger)
@@ -68,7 +75,7 @@ med-procesos-landing/
 │   │       └── estado-final.js     deja todo visible si no hay animaciones
 │   ├── vendor/                 ← librerías de terceros, sin modificar (GSAP 3, ScrollTrigger, Lenis)
 │   ├── fonts/                  ← Oswald e Inter en woff2 (servidas localmente)
-│   └── img/                    ← logos e isotipo en SVG
+│   └── img/                    ← logos e isotipo en SVG, og.png (vista previa al compartir) y apple-touch-icon.png
 ├── scripts/generar-mapa.mjs    ← regenera los trazados de los países del mapa
 ├── tests/landing.spec.js       ← pruebas end-to-end con Playwright
 ├── docs/                       ← capturas para este README
@@ -88,6 +95,8 @@ med-procesos-landing/
 | El diseño de una sección                  | su archivo en `assets/css/secciones/`. Las reglas para celular están al final de cada archivo.                                                             |
 | Una animación                             | `assets/js/animaciones/secciones.js` o `hero.js`                                                                                                          |
 | Enlaces de Calendly o WhatsApp            | `index.html`, buscando `calendly.com` o `api.whatsapp.com`                                                                                                |
+| Preguntas o resultados del test de etapa  | Preguntas: `index.html`, dentro de `#etapa`. Textos de cada etapa y reglas: `ETAPAS` y `calcularEtapa()` en `assets/js/modulos/etapa.js`. |
+| Imagen al compartir el enlace             | `assets/img/og.png` (1200×630). Las etiquetas `og:` están en el `<head>` de `index.html`. |
 | Fechas del cronograma                     | `index.html`, dentro de `#cronograma`. Cada pestaña tiene su `<div role="tabpanel">`.                                                                      |
 
 ### Añadir una sección nueva
@@ -106,7 +115,7 @@ Las fotos del equipo y de los médicos son de Med Procesos y de las personas que
 
 ### Si cambias CSS o JS: sube la versión
 
-Todos los archivos se enlazan con `?v=14` en `index.html`. Al publicar cambios, cambia ese número en todos los enlaces (buscar y reemplazar `?v=14` → `?v=15`) para que los navegadores no usen la versión guardada en caché.
+Todos los archivos se enlazan con `?v=15` en `index.html` y `404.html`. Al publicar cambios, cambia ese número en todos los enlaces (buscar y reemplazar `?v=15` → `?v=16`) para que los navegadores no usen la versión guardada en caché.
 
 ## Desarrollo local
 
@@ -136,6 +145,9 @@ Las pruebas revisan:
 - mitos, pestañas y preguntas;
 - que todo quede visible tras las animaciones;
 - la carga de Instagram;
+- el test de etapa (con clics, con teclado y su lógica);
+- el botón flotante de WhatsApp;
+- la vista previa al compartir y la página 404;
 - accesibilidad con axe (WCAG 2 AA);
 - la CSP.
 
@@ -144,6 +156,12 @@ GitHub Actions las corre en cada push.
 ## Publicación
 
 El sitio se publica con **GitHub Pages** desde la rama `main`: cada push a `main` actualiza el sitio en uno o dos minutos. No hay paso de compilación.
+
+## Buscadores
+
+- `sitemap.xml` se puede enviar en Google Search Console.
+- `robots.txt` no se incluye a propósito: los buscadores solo lo leen en la raíz del dominio (`modarox28.github.io/robots.txt`), no dentro de `/med-procesos-landing/`.
+- Los datos estructurados describen la página como un concepto **sobre** Med Procesos, no como su sitio oficial.
 
 ## Mapa
 

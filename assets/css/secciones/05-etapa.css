@@ -1,0 +1,68 @@
+/* TEST · ¿En qué etapa estás? (una pregunta a la vez; la lógica está en modulos/etapa.js) */
+.etapa-in { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+.etapa-intro { position: sticky; top: calc(var(--nav-h) + 32px); }
+.enlace-test { color: var(--naranja-ui); font-weight: 700; text-underline-offset: 3px; }
+
+.test { background: #fff; border-radius: var(--r); box-shadow: var(--sombra); padding: clamp(24px, 4vw, 40px); min-height: 420px; display: flex; flex-direction: column; }
+.test-progreso { height: 6px; background: var(--papel); border-radius: 6px; overflow: hidden; margin-bottom: 14px; }
+.test-barra { display: block; height: 100%; width: 25%; background: var(--naranja); border-radius: 6px; transition: width .45s var(--ease); }
+.test-paso { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); margin-bottom: 18px; }
+
+.test-pregunta { border: 0; }
+.test-pregunta + .test-pregunta { margin-top: 28px; }
+.test-pregunta legend { font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.2; margin-bottom: 20px; }
+
+/* Opciones: tarjetas grandes y fáciles de tocar; el radio real sigue siendo accesible */
+.opcion { display: block; position: relative; cursor: pointer; }
+.opcion + .opcion { margin-top: 10px; }
+.opcion input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.opcion span { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 14px 18px; border: 1.5px solid var(--linea); border-radius: 12px; font-weight: 700; transition: border-color .2s, background .2s, transform .2s var(--ease); }
+.opcion span::before { content: ""; width: 20px; height: 20px; flex-shrink: 0; border-radius: 50%; border: 2px solid #9AA3AC; transition: border .2s, box-shadow .2s; }
+.opcion:hover span { border-color: var(--naranja); }
+.opcion input:checked + span { border-color: var(--naranja-ui); background: #FBEFEA; }
+.opcion input:checked + span::before { border: 6px solid var(--naranja-ui); }
+.opcion input:focus-visible + span { outline: 3px solid var(--naranja); outline-offset: 2px; }
+
+.test-acciones { margin-top: auto; padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.test-ayuda { font-size: 13px; color: var(--suave); opacity: 0; transition: opacity .2s; }
+.test:has(:focus-visible) .test-ayuda { opacity: 1; }
+.test-pregunta:focus { outline: none; }
+
+/* Con JavaScript: se ve solo la pregunta activa */
+.test.paso-a-paso .test-pregunta { display: none; margin-top: 0; }
+.test.paso-a-paso .test-pregunta.activa { display: block; animation: test-entra .45s var(--ease); }
+.test.paso-a-paso .test-atras[disabled] { visibility: hidden; }
+.test.terminado .test-pregunta,
+.test.terminado .test-acciones,
+.test.terminado .test-paso { display: none !important; }
+@keyframes test-entra { from { opacity: 0; transform: translateX(24px); } }
+
+/* Sin JavaScript el test no puede calcular: se ocultan los controles de paso */
+.test:not(.paso-a-paso) .test-progreso,
+.test:not(.paso-a-paso) .test-paso,
+.test:not(.paso-a-paso) .test-acciones { display: none; }
+
+/* Resultado */
+.test-resultado { animation: test-entra .5s var(--ease); }
+.test-resultado:focus { outline: none; }
+.test-etiqueta { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--verde-osc); }
+.test-etapa-n { font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; font-size: clamp(64px, 9vw, 96px); line-height: 1; color: var(--naranja); }
+.test-titulo { font-family: "Oswald", "Arial Narrow", sans-serif; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.15; margin: 6px 0 10px; }
+.test-texto { color: var(--suave); }
+.test-sub { margin-top: 20px; font-weight: 700; font-size: 14px; }
+.test-servicios { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+.test-servicios li { background: var(--papel); border-radius: 8px; padding: 6px 12px; font-size: 14px; font-weight: 700; }
+.test-aviso { margin-top: 16px; padding: 12px 14px; border-left: 4px solid var(--naranja-ui); background: #FBEFEA; border-radius: 0 8px 8px 0; font-size: 14.5px; }
+.test-botones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.test-copiado { min-height: 1.6em; font-size: 14px; color: var(--verde-osc); font-weight: 700; margin-top: 8px; }
+.test-repetir { font-size: 14px; font-weight: 700; color: var(--suave); text-decoration: underline; text-underline-offset: 3px; padding: 6px 0; }
+.test-nota { margin-top: 14px; font-size: 13px; color: var(--suave); }
+
+@media (max-width: 900px) {
+  .etapa-in { grid-template-columns: 1fr; }
+  .etapa-intro { position: static; }
+  .test { min-height: 0; }
+}
+@media (max-width: 640px) {
+  .test-botones .boton { width: 100%; }
+}

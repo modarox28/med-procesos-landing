@@ -6,6 +6,8 @@ import { iniciarNavegacion, cerrarMenu } from "./modulos/navegacion.js";
 import { iniciarMitos } from "./modulos/mitos.js";
 import { iniciarPestanas } from "./modulos/cronograma.js";
 import { iniciarPreguntas } from "./modulos/preguntas.js";
+import { iniciarTestEtapa } from "./modulos/etapa.js";
+import { iniciarWhatsappFlotante } from "./modulos/whatsapp-flotante.js";
 import { iniciarInstagram } from "./modulos/instagram.js";
 import { mostrarEstadoFinal } from "./animaciones/estado-final.js";
 import { animarLogo, animarHero, animarMapa } from "./animaciones/hero.js";
@@ -19,6 +21,8 @@ iniciarNavegacion();
 iniciarMitos();
 iniciarPestanas({ alCambiar: () => animar && secciones.animarCronograma() });
 iniciarPreguntas();
+iniciarTestEtapa();
+iniciarWhatsappFlotante();
 iniciarInstagram();
 
 // 2. Animaciones
@@ -33,6 +37,7 @@ if (!animar) {
   secciones.animarRiesgos();
   secciones.animarCamino(mm);
   secciones.animarServicios(mm);
+  secciones.animarTest();
   secciones.animarMitos();
   secciones.animarCronograma();
   secciones.animarResultados();
