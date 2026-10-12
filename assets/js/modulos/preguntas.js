@@ -1,5 +1,5 @@
 // Preguntas frecuentes: <details> nativo, con altura animada si hay GSAP.
-import { $, $$, animar } from "./entorno.js";
+import { $, $$, animar } from "./entorno.js?v=16";
 
 export function iniciarPreguntas() {
   if (!animar) return; // sin animación, <details> funciona solo

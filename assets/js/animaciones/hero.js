@@ -1,6 +1,6 @@
 // Animaciones de entrada: logo que se traza, título del hero y mapa con el avión.
-import { $, $$ } from "../modulos/entorno.js";
-import { contar } from "../modulos/contadores.js";
+import { $, $$ } from "../modulos/entorno.js?v=16";
+import { contar } from "../modulos/contadores.js?v=16";
 
 export function animarLogo() {
   const { gsap } = window;

@@ -1,5 +1,5 @@
 // Mito o realidad: cada tarjeta es un botón que alterna aria-pressed (el CSS hace el giro 3D).
-import { $$ } from "./entorno.js";
+import { $$ } from "./entorno.js?v=16";
 
 export function iniciarMitos() {
   $$(".mito").forEach((tarjeta) =>

@@ -1,6 +1,6 @@
 // Botón flotante de WhatsApp: aparece después del hero y se esconde cuando ya se ve la sección de agenda
 // (que tiene sus propios botones) o cuando el menú del celular está abierto.
-import { $ } from "./entorno.js";
+import { $ } from "./entorno.js?v=16";
 
 export function iniciarWhatsappFlotante() {
   const boton = $(".wa-flotante");

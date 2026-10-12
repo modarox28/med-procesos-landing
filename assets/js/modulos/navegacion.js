@@ -1,6 +1,6 @@
 // Barra superior: fondo al bajar, se oculta al bajar y aparece al subir, y menú de celular.
-import { $, $$, animar } from "./entorno.js";
-import { obtenerLenis } from "./scroll.js";
+import { $, $$, animar } from "./entorno.js?v=16";
+import { obtenerLenis } from "./scroll.js?v=16";
 
 const nav = $("#nav");
 const boton = $(".nav-boton");

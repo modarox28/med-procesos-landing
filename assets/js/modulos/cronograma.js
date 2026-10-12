@@ -1,5 +1,5 @@
 // Pestañas del cronograma, accesibles con teclado (flechas izquierda/derecha).
-import { $, $$ } from "./entorno.js";
+import { $, $$ } from "./entorno.js?v=16";
 
 /** @param {{ alCambiar?: () => void }} opciones  se llama después de mostrar otro panel */
 export function iniciarPestanas({ alCambiar = () => {} } = {}) {

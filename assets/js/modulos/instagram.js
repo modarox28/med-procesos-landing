@@ -2,7 +2,7 @@
 // Las publicaciones están en el HTML (#insta-grid) como <blockquote class="instagram-media">.
 // El script de Instagram se carga solo cuando el visitante se acerca a la sección.
 // Si no carga (sin internet o con bloqueador), queda la tarjeta de color con el enlace al post.
-import { $ } from "./entorno.js";
+import { $ } from "./entorno.js?v=16";
 
 export function iniciarInstagram() {
   const grilla = $("#insta-grid");

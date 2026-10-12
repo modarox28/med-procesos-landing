@@ -1,5 +1,5 @@
 // Sin GSAP o con "reducir movimiento": deja todo en su estado final, sin animar.
-import { $, $$ } from "../modulos/entorno.js";
+import { $, $$ } from "../modulos/entorno.js?v=16";
 
 export function mostrarEstadoFinal() {
   $$(".resalta").forEach((m) => m.classList.add("pintado"));

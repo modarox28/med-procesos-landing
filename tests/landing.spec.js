@@ -279,3 +279,42 @@ test('página 404 con la marca y enlace al inicio', async ({ page }) => {
   expect(await page.evaluate(() => getComputedStyle(document.querySelector('.e404-n')).fontFamily)).toContain('Oswald');
   expect(errores).toEqual([]);
 });
+
+test('caché: todas las importaciones de JS usan la misma versión ?v= que index.html', async () => {
+  const raiz = path.join(__dirname, '..');
+  const html = fs.readFileSync(path.join(raiz, 'index.html'), 'utf8');
+  const version = html.match(/main\.js\?v=(\d+)/)[1];
+  const archivos = [];
+  const recorrerDir = (d) => fs.readdirSync(d, { withFileTypes: true }).forEach((e) => {
+    const r = path.join(d, e.name);
+    if (e.isDirectory()) recorrerDir(r); else if (r.endsWith('.js')) archivos.push(r);
+  });
+  recorrerDir(path.join(raiz, 'assets/js'));
+  const malos = [];
+  for (const f of archivos) {
+    for (const m of fs.readFileSync(f, 'utf8').matchAll(/from "(\.[^"]+)"/g)) {
+      if (!m[1].endsWith(`?v=${version}`)) malos.push(`${path.relative(raiz, f)}: ${m[1]}`);
+    }
+  }
+  const enlaces = [...html.matchAll(/(?:href|src)="(assets\/[^"]+\.(?:css|js)[^"]*)"/g)].map((m) => m[1]).filter((u) => !u.startsWith('assets/vendor'));
+  for (const u of enlaces) if (!u.endsWith(`?v=${version}`)) malos.push(`index.html: ${u}`);
+  expect(malos).toEqual([]);
+});
+
+test('si una animación falla, las demás siguen funcionando', async ({ page }) => {
+  // Simula una versión vieja de un módulo sin la animación del test (como pasaba con la caché)
+  await page.route(/animaciones\/secciones\.js/, async (r) => {
+    const res = await r.fetch();
+    const js = (await res.text()).replace('export function animarTest()', 'function animarTestOculta()');
+    r.fulfill({ response: res, body: js });
+  });
+  const errores = [];
+  page.on('console', (m) => m.type() === 'error' && errores.push(m.text()));
+  await page.goto('/');
+  await page.waitForLoadState('networkidle');
+  const estado = await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches ? null : window.ScrollTrigger.getAll().map((t) => t.trigger && t.trigger.className).join(' '));
+  test.skip(estado === null, 'sin animaciones con movimiento reducido');
+  expect(errores.some((e) => /Animación "test" falló/.test(e))).toBe(true);
+  expect(estado).toContain('mitos-lista');
+  expect(estado).toContain('mosaico');
+});

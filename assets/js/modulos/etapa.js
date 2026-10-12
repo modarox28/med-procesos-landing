@@ -1,6 +1,6 @@
 // Test "¿En qué etapa estás?": una pregunta a la vez y un resultado con la etapa y los servicios sugeridos.
 // No envía ni guarda nada: todo se calcula en el navegador.
-import { $, $$ } from "./entorno.js";
+import { $, $$ } from "./entorno.js?v=16";
 
 const WHATSAPP = "https://api.whatsapp.com/message/KINW7CGQKIVFO1";
 

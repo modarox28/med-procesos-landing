@@ -1,5 +1,5 @@
 // Desplazamiento: volver al inicio al recargar, scroll suave con Lenis y enlaces internos (#seccion).
-import { $, $$, movimientoReducido, punteroFino, hayGSAP } from "./entorno.js";
+import { $, $$, movimientoReducido, punteroFino, hayGSAP } from "./entorno.js?v=16";
 
 let lenis = null;
 

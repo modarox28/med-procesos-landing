@@ -1,7 +1,7 @@
 // Animaciones de scroll de cada sección (GSAP + ScrollTrigger).
 // Cada función corresponde a una sección del HTML; se llaman desde main.js.
-import { $, $$, punteroFino } from "../modulos/entorno.js";
-import { contar } from "../modulos/contadores.js";
+import { $, $$, punteroFino } from "../modulos/entorno.js?v=16";
+import { contar } from "../modulos/contadores.js?v=16";
 
 const g = () => window.gsap;
 const ST = () => window.ScrollTrigger;

@@ -1,5 +1,5 @@
 // Contadores (+120): cuentan desde 0 hasta data-hasta, con data-prefijo opcional.
-import { animar } from "./entorno.js";
+import { animar } from "./entorno.js?v=16";
 
 export function contar(elemento) {
   const hasta = Number(elemento.dataset.hasta);

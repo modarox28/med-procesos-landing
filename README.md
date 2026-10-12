@@ -115,7 +115,7 @@ Las fotos del equipo y de los médicos son de Med Procesos y de las personas que
 
 ### Si cambias CSS o JS: sube la versión
 
-Todos los archivos se enlazan con `?v=15` en `index.html` y `404.html`. Al publicar cambios, cambia ese número en todos los enlaces (buscar y reemplazar `?v=15` → `?v=16`) para que los navegadores no usen la versión guardada en caché.
+Todos los archivos se enlazan con `?v=16`: en `index.html`, en `404.html` **y en cada `import` de los archivos `.js`**. Al publicar cambios, busca y reemplaza `?v=16` → `?v=17` en todo el proyecto (en VS Code: `Ctrl+Shift+H`). Si un archivo queda con otro número, el navegador puede mezclar versiones nuevas con viejas guardadas en caché y algunas animaciones dejan de funcionar. Una prueba revisa que todos usen el mismo número.
 
 ## Desarrollo local
 
